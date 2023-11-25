@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<robot name="robot">
+    <link name="base">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.5"/>
+            <inertia ixx="0.00315" ixy="8.2904e-07" ixz="0.00015" iyy="0.00388" iyz="8.2299e-06" izz="0.004285"/>
+        </inertial>
+    </link>
+
+    <link name="link1">
+        <visual>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.25 0.0 0.05"/>
+            <mass value="0.5"/>
+            <inertia ixx="0.00315" ixy="8.2904e-07" ixz="0.00015" iyy="0.00388" iyz="8.2299e-06" izz="0.004285"/>
+        </inertial>
+    </link>
+
+    <joint name="joint1" type="revolute">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base"/>
+        <child link="link1"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0.0" upper="3.14"/>
+    </joint>
+
+    <link name="link2">
+        <visual>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.25 0.0 0.05"/>
+            <mass value="0.5"/>
+            <inertia ixx="0.00315" ixy="8.2904e-07" ixz="0.00015" iyy="0.00388" iyz="8.2299e-06" izz="0.004285"/>
+        </inertial>
+    </link>
+
+    <joint name="joint2" type="revolute">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="link1"/>
+        <child link="link2"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="1.57"/>
+    </joint>
+
+    <link name="link3">
+        <visual>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </visual>
+
+        <collision>
+            <origin xyz="0.0 0.0 0.05"/>
+            <geometry>
+            <box size="0.5 0.1 0.1"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <origin rpy="0 0 0" xyz="0.25 0.0 0.05"/>
+            <mass value="0.5"/>
+            <inertia ixx="0.00315" ixy="8.2904e-07" ixz="0.00015" iyy="0.00388" iyz="8.2299e-06" izz="0.004285"/>
+        </inertial>
+    </link>
+
+    <joint name="joint3" type="revolute">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="link3"/>
+        <child link="link3"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57" upper="1.57"/>
+    </joint>
+</robot>
