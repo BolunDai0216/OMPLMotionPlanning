@@ -1,9 +1,9 @@
 q1_start: 0.611
 q2_start: 0.215
 q3_start: -0.826
-q1_goal: 0.0
-q2_goal: 0.0
-q3_goal: 0.0
+q1_goal: 0.0575086 
+q2_goal: -1.33518 
+q3_goal: -0.644652
 box1_x: 1.45
 box1_y: 1.0
 box1_theta: 0.0
