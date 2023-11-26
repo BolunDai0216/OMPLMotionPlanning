@@ -91,8 +91,8 @@ private:
 
   std::vector<hpp::fcl::Transform3f> box_transforms;
 
-  hpp::fcl::CollisionRequest req;
-  hpp::fcl::CollisionResult res;
+  mutable hpp::fcl::CollisionRequest req;
+  mutable hpp::fcl::CollisionResult res;
 };
 
 #endif  // STATE_CHECKER_HPP
