@@ -8,7 +8,8 @@
 #include "state_checker.hpp"
 #include "goal_checker.hpp"
 
-void plan(std::array<double, 3> q_start, std::array<double, 3> goal)
+void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goal,
+          const std::array<double, 9>& box_pose)
 {
   // construct the state space we are planning in
   auto space(std::make_shared<ob::RealVectorStateSpace>(3));
@@ -29,7 +30,7 @@ void plan(std::array<double, 3> q_start, std::array<double, 3> goal)
   // construct an instance of space information from this state space
   auto si(std::make_shared<ob::SpaceInformation>(space));
   auto customStateChecker = std::make_shared<CustomStateValidityChecker>(si);
-  customStateChecker->setBoxPose();
+  customStateChecker->setBoxPose(box_pose);
 
   // set state validity checking for this space
   si->setStateValidityChecker(customStateChecker);

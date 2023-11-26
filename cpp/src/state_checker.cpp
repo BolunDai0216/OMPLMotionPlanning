@@ -36,19 +36,16 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
   T_box_fcl = hpp::fcl::Transform3f();
 }
 
-void CustomStateValidityChecker::setBoxPose()
+void CustomStateValidityChecker::setBoxPose(const std::array<double, 9>& box_pose)
 {
   // set box pose
-  // R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  // R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  // R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  R_box1 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
-  R_box2 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
-  R_box3 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
+  R_box1 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, box_pose[2]);
+  R_box2 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, box_pose[5]);
+  R_box3 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, box_pose[8]);
 
-  p_box1 << 1.55, 1.0, 0.05;
-  p_box2 << 1.35, 0.2, 0.05;
-  p_box3 << 1.75, 0.2, 0.05;
+  p_box1 << box_pose[0], box_pose[1], 0.05;
+  p_box2 << box_pose[3], box_pose[4], 0.05;
+  p_box3 << box_pose[6], box_pose[7], 0.05;
 
   T_box1_fcl = hpp::fcl::Transform3f(R_box1, p_box1);
   T_box2_fcl = hpp::fcl::Transform3f(R_box2, p_box2);

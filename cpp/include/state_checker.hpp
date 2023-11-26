@@ -37,7 +37,7 @@ public:
 
   // Check if a state is valid
   bool isValid(const ob::State* state) const override;
-  void setBoxPose();
+  void setBoxPose(const std::array<double, 9>& box_pose);
 
 private:
   pinocchio::Model model;
