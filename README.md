@@ -20,7 +20,7 @@ Inside the docker container, go to the folder `/home/AnywareInterview/cpp/build`
 
 ```bash
 cmake ..
-cmake --build . -j 2
+cmake --build . -j 4
 ```
 
 Then run the executable `ompl_hello_world` to see the results
