@@ -7,13 +7,13 @@ I used an OMPL RRT* solver to solve this task. The collision checking is done us
 To run the code please build the docker image using the following command:
 
 ```bash
-sudo docker build -t ompl .
+sudo docker build -t interview .
 ```
 
 Then run the docker image using the following command:
 
 ```bash
-sudo docker run -it --name ompl_container ompl:latest
+sudo docker run -it --name interview_container interview:latest
 ```
 
 Inside the docker container, go to the folder `/home/AnywareInterview/cpp/build` and run
@@ -23,10 +23,10 @@ cmake ..
 cmake --build . -j 4
 ```
 
-Then run the executable `ompl_hello_world` to see the results
+Then run the executable `interview` to see the results
 
 ```bash
-./ompl_hello_world
+./interview
 ```
 
 ## C++ Version Visualization
