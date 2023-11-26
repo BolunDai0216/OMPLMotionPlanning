@@ -3,7 +3,7 @@
 CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
 {
   // build pin_robot from urdf
-  urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
+  urdf_filename = "/home/AnywareInterview/python/robots/robot.urdf";
   pinocchio::urdf::buildModel(urdf_filename, model);
   data = pinocchio::Data(model);
 
