@@ -16,4 +16,4 @@ add_executable(ompl_hello_world test.cpp)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 # Link OMPL libraries
-target_link_libraries(ompl_hello_world ${OMPL_LIBRARIES})
+target_link_libraries(ompl_hello_world ${OMPL_LIBRARIES} pinocchio::pinocchio hpp-fcl::hpp-fcl)

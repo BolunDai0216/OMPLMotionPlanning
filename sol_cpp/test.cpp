@@ -22,14 +22,26 @@ public:
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
     pinocchio::Model model;
-    pinocchio::Data data;
+
+    // build pin_robot from urdf
+    std::string urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
+    pin::urdf::buildModel(urdf_filename, model);
+    data = pin::Data(model);
   }
 
   // Check if a state is valid
   bool isValid(const ob::State* state) const override
   {
-    // Custom validity check. Replace with your own logic.
-    // For example, check if the state is within certain bounds
+    // Cast the state to the specific type of your state space, e.g., RealVectorStateSpace
+    const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
+
+    // Access the elements
+    double x = realState->values[0];
+    double y = realState->values[1];
+    double z = realState->values[2];
+
+    std::cout << x << std::endl;
+
     return true;
   }
 };
