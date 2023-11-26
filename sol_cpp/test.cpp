@@ -42,14 +42,21 @@ public:
   pinocchio::Model::FrameIndex link3Id;
   pinocchio::Model::FrameIndex boxId;
 
-  hpp::fcl::Box link1_col(1, 1, 1);
-  //   hpp::fcl::CollisionGeometryPtr_t link2_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
-  //   hpp::fcl::CollisionGeometryPtr_t link3_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
-  //   hpp::fcl::CollisionGeometryPtr_t box_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  hpp::fcl::Box link1_col;
+  hpp::fcl::Box link2_col;
+  hpp::fcl::Box link3_col;
+  hpp::fcl::Box box_col;
 
-  //   hpp::fcl::CollisionGeometryPtr_t box1_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
-  //   hpp::fcl::CollisionGeometryPtr_t box2_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
-  //   hpp::fcl::CollisionGeometryPtr_t box3_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  hpp::fcl::Box box1_col;
+  hpp::fcl::Box box2_col;
+  hpp::fcl::Box box3_col;
+
+  Eigen::Matrix4d T_link_offset;
+  Eigen::Matrix4d T_box_offset;
+  Eigen::Matrix4d T_link1;
+  Eigen::Matrix4d T_link2;
+  Eigen::Matrix4d T_link3;
+  Eigen::Matrix4d T_box;
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
@@ -62,6 +69,18 @@ public:
     link2Id = model.getFrameId("link2");
     link3Id = model.getFrameId("link3");
     boxId = model.getFrameId("box");
+
+    link1_col = hpp::fcl::Box(0.5, 0.1, 0.1);
+    link2_col = hpp::fcl::Box(0.5, 0.1, 0.1);
+    link3_col = hpp::fcl::Box(0.5, 0.1, 0.1);
+    box_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+
+    box1_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+    box2_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+    box3_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+
+    T_link_offset << 1.0, 0.0, 0.0, 0.25, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+    T_box_offset << 1.0, 0.0, 0.0, 0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
   }
 
   // Check if a state is valid
@@ -85,7 +104,12 @@ public:
     pinocchio::forwardKinematics(model, data, q, dq);
     pinocchio::updateFramePlacements(model, data);
 
-    std::cout << data.oMf[boxId].toHomogeneousMatrix() << std::endl;
+    T_link1 = data.oMf[link1Id].toHomogeneousMatrix() * T_link_offset;
+    T_link2 = data.oMf[link2Id].toHomogeneousMatrix() * T_link_offset;
+    T_link3 = data.oMf[link3Id].toHomogeneousMatrix() * T_link_offset;
+    T_box = data.oMf[boxId].toHomogeneousMatrix() * T_box_offset;
+
+    std::cout << T_box << std::endl;
 
     return true;
   }
