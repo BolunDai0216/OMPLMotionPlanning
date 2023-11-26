@@ -5,7 +5,7 @@ CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::
   setThreshold(0.3);
 }
 
-virtual double CustomGoal::distanceGoal(const ompl::base::State* state) const
+double CustomGoal::distanceGoal(const ompl::base::State* state) const
 {
   // cast the state to the RealVectorStateSpace
   const auto* realState = state->as<ompl::base::RealVectorStateSpace::StateType>();
