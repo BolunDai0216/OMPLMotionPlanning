@@ -122,5 +122,5 @@ python3 rrt_star.py
 This will generate a pickle file in the `data` folder of the root directory. To visualize the results, run the command
 
 ```bash
-python3 visualize.py
+python3 visualize.py --from-pickle
 ```
