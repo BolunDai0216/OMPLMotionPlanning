@@ -172,8 +172,19 @@ public:
 
     bool col11 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link1_col, T_link1_fcl, req, res);
     res.clear();
+    bool col12 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link2_col, T_link2_fcl, req, res);
+    res.clear();
+    bool col13 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link3_col, T_link3_fcl, req, res);
+    res.clear();
+    bool col14 = hpp::fcl::collide(&box1_col, T_box1_fcl, &box_col, T_box_fcl, req, res);
+    res.clear();
 
-    return col11;
+    std::cout << "col11: " << col11 << std::endl;
+    std::cout << "col12: " << col12 << std::endl;
+    std::cout << "col13: " << col13 << std::endl;
+    std::cout << "col14: " << col14 << std::endl;
+
+    return col14;
   }
 };
 
