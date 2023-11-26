@@ -23,17 +23,20 @@ namespace og = ompl::geometric;
 class CustomStateValidityChecker : public ob::StateValidityChecker
 {
 public:
+  pinocchio::Model model;
+  pinocchio::Data data;
+  std::string urdf_filename;
+
+  pinocchio::Model::FrameIndex link1Id;
+
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
-    pinocchio::Model model;
-    pinocchio::Data data;
-
     // build pin_robot from urdf
-    std::string urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
+    urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
     pinocchio::urdf::buildModel(urdf_filename, model);
     data = pinocchio::Data(model);
 
-    pinocchio::Model::FrameIndex link1Id = model.getFrameId("link1");
+    link1Id = model.getFrameId("link1");
   }
 
   // Check if a state is valid
