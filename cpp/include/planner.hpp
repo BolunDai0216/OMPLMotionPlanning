@@ -10,7 +10,7 @@
 class CustomGoal : public ompl::base::GoalRegion
 {
 public:
-  MyGoalRegion(const SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
+  MyGoalRegion(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
   {
     setThreshold(0.1);
   }
