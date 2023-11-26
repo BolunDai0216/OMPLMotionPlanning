@@ -4,10 +4,11 @@
 #include <ompl/geometric/planners/rrt/RRTstar.h>
 
 #include <iostream>
+#include <array>
 #include "state_checker.hpp"
 #include "goal_checker.hpp"
 
-void plan()
+void plan(std::array<double, 3> q_start, std::array<double, 3> goal)
 {
   // construct the state space we are planning in
   auto space(std::make_shared<ob::RealVectorStateSpace>(3));
@@ -33,14 +34,14 @@ void plan()
 
   // create a random start state
   ob::ScopedState<> start(space);
-  start[0] = 0.611;
-  start[1] = 0.215;
-  start[2] = -0.826;
+  start[0] = q_start[0];
+  start[1] = q_start[1];
+  start[2] = q_start[2];
 
   auto myCustomGoal = std::make_shared<CustomGoal>(si);
-  myCustomGoal->goal_x = 0.5;
-  myCustomGoal->goal_y = 1.0;
-  myCustomGoal->goal_z = 0.05;
+  myCustomGoal->goal_x = goal[0];
+  myCustomGoal->goal_y = goal[1];
+  myCustomGoal->goal_z = goal[2];
 
   // create a problem instance
   auto pdef(std::make_shared<ob::ProblemDefinition>(si));

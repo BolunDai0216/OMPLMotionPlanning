@@ -2,7 +2,7 @@
 
 CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
 {
-  setThreshold(0.3);
+  setThreshold(0.1);
 
   // build pin_robot from urdf
   urdf_filename = "/home/AnywareInterview/python/robots/robot.urdf";
@@ -40,7 +40,7 @@ double CustomGoal::distanceGoal(const ompl::base::State* state) const
 
   auto p_box = data.oMf[boxId].translation();
 
-  sum = std::pow(p_box(0) - goal_x, 2) + std::pow(p_box(1) - goal_y, 2);
+  sum = std::pow(p_box(0) - goal_x, 2) + std::pow(p_box(1) - goal_y, 2) + std::pow(p_box(2) - goal_z, 2);
   error = std::sqrt(sum);
 
   return error;
