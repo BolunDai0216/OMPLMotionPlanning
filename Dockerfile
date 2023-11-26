@@ -34,9 +34,8 @@ ENV CMAKE_PREFIX_PATH "/opt/openrobots:${CMAKE_PREFIX_PATH}"
 WORKDIR /home
 
 RUN mkdir AnywareInterview
-COPY . /home/AnywareInterview
 
-# RUN git clone https://github.com/BolunDai0216/AnywareInterview.git
+COPY . /home/AnywareInterview
 
 WORKDIR /home/AnywareInterview/cpp
 
