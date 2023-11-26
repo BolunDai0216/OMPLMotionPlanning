@@ -8,21 +8,22 @@
 #include <ompl/config.h>
 
 #include <pinocchio/fwd.hpp>
-#include <pinocchio/parsers/urdf.hpp>
+#include <pinocchio/algorithm/frames.hpp>
+#include <pinocchio/algorithm/jacobian.hpp>
 #include <pinocchio/algorithm/joint-configuration.hpp>
 #include <pinocchio/algorithm/kinematics.hpp>
-#include <pinocchio/algorithm/jacobian.hpp>
-#include <pinocchio/algorithm/frames.hpp>
-#include <pinocchio/multibody/model.hpp>
 #include <pinocchio/algorithm/model.hpp>
+#include <pinocchio/multibody/model.hpp>
+#include <pinocchio/parsers/urdf.hpp>
 
-#include <hpp/fcl/math/transform.h>
 #include <hpp/fcl/collision.h>
+#include <hpp/fcl/collision_data.h>
 #include <hpp/fcl/collision_object.h>
+#include <hpp/fcl/math/transform.h>
 #include <hpp/fcl/shape/geometric_shapes.h>
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <vector>
 
 const double pi = M_PI;  // π as a double
@@ -126,7 +127,7 @@ public:
 
     box_transforms.push_back(T_box1_fcl);
     box_transforms.push_back(T_box2_fcl);
-    box_transforms.push_back(T_box2_fcl);
+    box_transforms.push_back(T_box3_fcl);
   }
 
   // Check if a state is valid
@@ -165,7 +166,12 @@ public:
     T_link3_fcl.setTransform(T_link3_pin.rotation(), T_link3_pin.translation());
     T_box_fcl.setTransform(T_box_pin.rotation(), T_box_pin.translation());
 
-    std::cout << T_box << std::endl;
+    for (const auto& box_transform : box_transforms)
+    {
+      std::cout << "Translation: " << box_transform.getTranslation() << std::endl;
+      hpp::fcl::CollisionRequest req;
+      hpp::fcl::CollisionResult res;
+    }
 
     return true;
   }
