@@ -19,6 +19,10 @@ public:
   CustomGoal(const ompl::base::SpaceInformationPtr& si);
   virtual double distanceGoal(const ompl::base::State* state) const;
 
+  double goal_x;
+  double goal_y;
+  double goal_z;
+
 private:
   mutable double sum;
   mutable double error;

@@ -11,6 +11,10 @@ CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::
 
   // get link frame indices
   boxId = model.getFrameId("box");
+
+  goal_x = 0.5;
+  goal_y = -1.0;
+  goal_z = 0.05;
 }
 
 double CustomGoal::distanceGoal(const ompl::base::State* state) const
@@ -36,7 +40,7 @@ double CustomGoal::distanceGoal(const ompl::base::State* state) const
 
   auto p_box = data.oMf[boxId].translation();
 
-  sum = std::pow(p_box(0) - 0.5, 2) + std::pow(p_box(1) + 1.0, 2) + std::pow(p_box(2) - 0.05, 2);
+  sum = std::pow(p_box(0) - goal_x, 2) + std::pow(p_box(1) - goal_y, 2);
   error = std::sqrt(sum);
 
   return error;

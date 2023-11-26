@@ -7,35 +7,6 @@
 #include "state_checker.hpp"
 #include "goal_checker.hpp"
 
-// class CustomGoal : public ompl::base::GoalRegion
-// {
-// public:
-//   CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
-//   {
-//     setThreshold(0.3);
-//   }
-
-//   virtual double distanceGoal(const ompl::base::State* state) const
-//   {
-//     // cast the state to the RealVectorStateSpace
-//     const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
-
-//     // access the elements
-//     double q1 = realState->values[0];
-//     double q2 = realState->values[1];
-//     double q3 = realState->values[2];
-
-//     sum = std::pow(q1 - 0.0, 2) + std::pow(q2 + pi / 2, 2) + std::pow(q3 - 0.0, 2);
-//     error = std::sqrt(sum);
-
-//     return error;
-//   }
-
-// private:
-//   mutable double sum;
-//   mutable double error;
-// };
-
 void plan()
 {
   // construct the state space we are planning in
@@ -66,13 +37,10 @@ void plan()
   start[1] = 0.215;
   start[2] = -0.826;
 
-  // create a random goal state
-  // ob::ScopedState<> goal(space);
-  // goal[0] = 0.0;
-  // goal[1] = -pi / 2;
-  // goal[2] = 0.0;
-
   auto myCustomGoal = std::make_shared<CustomGoal>(si);
+  myCustomGoal->goal_x = 0.5;
+  myCustomGoal->goal_y = 1.0;
+  myCustomGoal->goal_z = 0.05;
 
   // create a problem instance
   auto pdef(std::make_shared<ob::ProblemDefinition>(si));
