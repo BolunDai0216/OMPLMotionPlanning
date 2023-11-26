@@ -12,6 +12,7 @@ CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::
   // get link frame indices
   boxId = model.getFrameId("box");
 
+  // set default goal position
   goal_x = 0.5;
   goal_y = -1.0;
   goal_z = 0.05;

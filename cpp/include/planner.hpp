@@ -28,9 +28,11 @@ void plan(std::array<double, 3> q_start, std::array<double, 3> goal)
 
   // construct an instance of space information from this state space
   auto si(std::make_shared<ob::SpaceInformation>(space));
+  auto customStateChecker = std::make_shared<CustomStateValidityChecker>(si);
+  customStateChecker->setBoxPose();
 
   // set state validity checking for this space
-  si->setStateValidityChecker(std::make_shared<CustomStateValidityChecker>(si));
+  si->setStateValidityChecker(customStateChecker);
 
   // create a random start state
   ob::ScopedState<> start(space);

@@ -28,10 +28,19 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
   T_link_offset << 1.0, 0.0, 0.0, 0.25, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
   T_box_offset << 1.0, 0.0, 0.0, 0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
 
-  // define box transforms
-  R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
+  // define link transforms
+  T_link1_fcl = hpp::fcl::Transform3f();
+  T_link2_fcl = hpp::fcl::Transform3f();
+  T_link3_fcl = hpp::fcl::Transform3f();
+  T_box_fcl = hpp::fcl::Transform3f();
+}
+
+void CustomStateValidityChecker::setBoxPose()
+{
+  // set box pose
+  R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0;
+  R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0;
+  R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 1.0;
 
   p_box1 << 1.55, 1.0, 0.05;
   p_box2 << 1.35, 0.2, 0.05;
@@ -40,12 +49,6 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
   T_box1_fcl = hpp::fcl::Transform3f(R_box1, p_box1);
   T_box2_fcl = hpp::fcl::Transform3f(R_box2, p_box2);
   T_box3_fcl = hpp::fcl::Transform3f(R_box3, p_box3);
-
-  // define link transforms
-  T_link1_fcl = hpp::fcl::Transform3f();
-  T_link2_fcl = hpp::fcl::Transform3f();
-  T_link3_fcl = hpp::fcl::Transform3f();
-  T_box_fcl = hpp::fcl::Transform3f();
 }
 
 bool CustomStateValidityChecker::isValid(const ob::State* state) const
