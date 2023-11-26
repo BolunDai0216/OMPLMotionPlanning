@@ -2,7 +2,7 @@
 
 CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
 {
-  setThreshold(0.1);
+  // setThreshold(0.1);
 
   // build pin_robot from urdf
   urdf_filename = "/home/AnywareInterview/python/robots/robot.urdf";
@@ -11,6 +11,11 @@ CustomGoal::CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::
 
   // get link frame indices
   boxId = model.getFrameId("box");
+}
+
+void CustomGoal::setThresh(const double threshold)
+{
+  setThreshold(threshold);
 }
 
 void CustomGoal::setGoal(const std::array<double, 3>& goal)

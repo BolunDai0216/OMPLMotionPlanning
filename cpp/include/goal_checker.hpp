@@ -26,6 +26,13 @@ public:
    **/
   void setGoal(const std::array<double, 3>& goal);
 
+  /**
+   * @brief Set the Threshold object
+   *
+   * @param threshold
+   **/
+  void setThresh(const double threshold);
+
 private:
   mutable double sum;
   mutable double error;

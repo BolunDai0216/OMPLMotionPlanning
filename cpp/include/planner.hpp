@@ -9,7 +9,7 @@
 #include "goal_checker.hpp"
 
 void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goal,
-          const std::array<double, 9>& box_pose)
+          const std::array<double, 9>& box_pose, const double threshold)
 {
   // construct the state space we are planning in
   auto space(std::make_shared<ob::RealVectorStateSpace>(3));
@@ -42,6 +42,7 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
   start[2] = q_start[2];
 
   auto customGoal = std::make_shared<CustomGoal>(si);
+  customGoal->setThresh(threshold);
   customGoal->setGoal(goal);
 
   // create a problem instance

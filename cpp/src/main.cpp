@@ -48,7 +48,9 @@ int main(int /*argc*/, char** /*argv*/)
     box1_x, box1_y, box1_theta, box2_x, box2_y, box2_theta, box3_x, box3_y, box3_theta
   };
 
-  plan(q_start, goal, box_pose);
+  double threshold = 0.1;
+
+  plan(q_start, goal, box_pose, threshold);
 
   return 0;
 }
