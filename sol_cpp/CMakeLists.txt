@@ -17,7 +17,7 @@ find_package(pinocchio REQUIRED)
 find_package(hpp-fcl REQUIRED)
 
 # Add executable target with source files
-add_executable(ompl_hello_world src/main.cpp)
+add_executable(ompl_hello_world src/main.cpp src/state_checker2.cpp)
 
 # Link OMPL libraries
 target_link_libraries(ompl_hello_world ${OMPL_LIBRARIES} pinocchio::pinocchio hpp-fcl::hpp-fcl)
