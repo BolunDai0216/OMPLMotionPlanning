@@ -6,6 +6,7 @@
 #include <ompl/base/SpaceInformation.h>
 #include <ompl/base/StateValidityChecker.h>
 #include <ompl/base/spaces/RealVectorStateSpace.h>
+#include <ompl/geometric/SimpleSetup.h>
 #include <ompl/config.h>
 
 #include <pinocchio/fwd.hpp>

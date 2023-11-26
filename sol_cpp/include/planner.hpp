@@ -1,17 +1,10 @@
 #ifndef PLANNER_HPP
 #define PLANNER_HPP
 
-#include <ompl/base/SpaceInformation.h>
-#include <ompl/base/StateValidityChecker.h>
-#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/geometric/planners/rrt/RRTConnect.h>
-#include <ompl/config.h>
 
 #include <iostream>
 #include "state_checker.hpp"
-
-namespace ob = ompl::base;
-namespace og = ompl::geometric;
 
 void plan()
 {
