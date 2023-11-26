@@ -76,6 +76,14 @@ python3 visualize.py
 
 to visualize the results.
 
+## Sample Trajectories
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/8894b5f6-6905-454f-b794-409bc1db4e2f
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/30d0ea69-b0d2-4127-8ab6-ed6a68e8de20
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/9ec235dc-3e9b-4a9a-a30f-836b51aac2d0
+
 ## C++ Version Changing the Environment
 
 To change the environment, please modify the file `cpp/config.yaml`. This allows the user to change the start joint angles, goal tooltip position and the poses of the boxes. To change the size of the robot and boxes, please change the following variables in `cpp/src/state_checker.cpp`:
