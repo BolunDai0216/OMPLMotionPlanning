@@ -40,7 +40,7 @@ RUN git clone https://github.com/BolunDai0216/AnywareInterview.git
 
 WORKDIR /home/AnywareInterview/sol_cpp
 
-RUN mkdir build && cd build && cmake .. && cmake --build .
+RUN mkdir build
 
 # Specify the command to run on container start
 CMD ["bash"]
