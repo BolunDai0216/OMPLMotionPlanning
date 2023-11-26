@@ -20,14 +20,12 @@ Inside the docker container, go to the folder `/home/AnywareInterview/cpp/build`
 
 ```bash
 cmake ..
-cmake --build . -j 4
+cmake --build . -j 8
 ```
 
-Then run the executable `interview` to see the results
+- **Method 1**: Then run the executable `preplan` to get `q_goal` (the last set of joint angles in the plan). Then, update `cpp/plan_config.yaml` with the obtained `q_goal` and run the exectuable `plan` to get the final plan.
+- **Method 2**: Run the executable `interview` to get the final plan.
 
-```bash
-./interview
-```
 
 ## C++ Version Visualization
 
