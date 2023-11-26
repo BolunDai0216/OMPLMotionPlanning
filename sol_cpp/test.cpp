@@ -1,41 +1,46 @@
 #include <ompl/base/SpaceInformation.h>
+#include <ompl/base/StateValidityChecker.h>
 #include <ompl/base/spaces/SE3StateSpace.h>
 #include <ompl/geometric/planners/rrt/RRTConnect.h>
 #include <ompl/geometric/SimpleSetup.h>
 
 #include <ompl/config.h>
 #include <iostream>
+#include <cmath>
 
+const double pi = M_PI; // π as a double
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
 
-bool isStateValid(const ob::State *state)
-{
-    // cast the abstract state type to the type we expect
-    const auto *se3state = state->as<ob::SE3StateSpace::StateType>();
+// Custom State Validity Checker
+class CustomStateValidityChecker : public ob::StateValidityChecker {
+public:
+    CustomStateValidityChecker(const ob::SpaceInformationPtr &si)
+        : ob::StateValidityChecker(si) {}
 
-    // extract the first component of the state and cast it to what we expect
-    const auto *pos = se3state->as<ob::RealVectorStateSpace::StateType>(0);
-
-    // extract the second component of the state and cast it to what we expect
-    const auto *rot = se3state->as<ob::SO3StateSpace::StateType>(1);
-
-    // check validity of state defined by pos & rot
-
-
-    // return a value that is always true but uses the two variables we define, so we avoid compiler warnings
-    return (const void*)rot != (const void*)pos;
-}
+    // Check if a state is valid
+    bool isValid(const ob::State *state) const override {
+        // Custom validity check. Replace with your own logic.
+        // For example, check if the state is within certain bounds
+        return true;
+    }
+};
 
 void plan()
 {
     // construct the state space we are planning in
-    auto space(std::make_shared<ob::SE3StateSpace>());
+    auto space(std::make_shared<ompl::base::RealVectorStateSpace>(3));
 
-    // set the bounds for the R^3 part of SE(3)
+    // set the bounds for R^3
     ob::RealVectorBounds bounds(3);
-    bounds.setLow(-1);
-    bounds.setHigh(1);
+    bounds.setLow(0, 0.0);
+    bounds.setHigh(0, pi);
+
+    bounds.setLow(1, -pi/2);
+    bounds.setHigh(1, pi/2);
+
+    bounds.setLow(2, -pi/2);
+    bounds.setHigh(2, pi/2);
 
     space->setBounds(bounds);
 
@@ -43,15 +48,19 @@ void plan()
     auto si(std::make_shared<ob::SpaceInformation>(space));
 
     // set state validity checking for this space
-    si->setStateValidityChecker(isStateValid);
+    si->setStateValidityChecker(std::make_shared<CustomStateValidityChecker>(si));
 
     // create a random start state
     ob::ScopedState<> start(space);
-    start.random();
+    start[0] = 0.611;
+    start[1] = 0.215;
+    start[2] = -0.826;
 
     // create a random goal state
     ob::ScopedState<> goal(space);
-    goal.random();
+    goal[0] = 0.0;
+    goal[1] = -pi/2;
+    goal[2] = 0.0;
 
     // create a problem instance
     auto pdef(std::make_shared<ob::ProblemDefinition>(si));
@@ -94,10 +103,6 @@ void plan()
 int main(int /*argc*/, char ** /*argv*/)
 {
     std::cout << "OMPL version: " << OMPL_VERSION << std::endl;
-
     plan();
-
-    // planWithSimpleSetup();
-
     return 0;
 }
