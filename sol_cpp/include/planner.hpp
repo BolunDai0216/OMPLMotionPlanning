@@ -35,7 +35,7 @@ void plan()
   auto si(std::make_shared<ob::SpaceInformation>(space));
 
   // set state validity checking for this space
-  si->setStateValidityChecker(std::make_shared<StateValidityChecker>(si));
+  si->setStateValidityChecker(std::make_shared<CustomStateValidityChecker>(si));
 
   // create a random start state
   ob::ScopedState<> start(space);
