@@ -13,7 +13,7 @@ int main(int /*argc*/, char** /*argv*/)
   std::array<double, 3> goal = { 0.5, -1.0, 0.05 };
 
   // x1, y1, theta1, x2, y2, theta2, x3, y3, theta3
-  std::array<double, 9>& box_pose = { 1.55, 1.0, 0.0, 1.35, 0.2, 0.0, 1.75, 0.2, 0.0 };
+  std::array<double, 9> box_pose = { 1.45, 1.0, 0.0, 1.25, 0.2, 0.0, 1.65, 0.2, 0.0 };
 
   plan(q_start, goal, box_pose);
 
