@@ -7,26 +7,26 @@ I used an OMPL RRT* solver to solve this task. The collision checking is done us
 To run the code please build the docker image using the following command:
 
 ```bash
-sudo docker build -t ompl .
+sudo docker build -t interview .
 ```
 
 Then run the docker image using the following command:
 
 ```bash
-sudo docker run -it --name ompl_container ompl:latest
+sudo docker run -it --name interview_container interview:latest
 ```
 
 Inside the docker container, go to the folder `/home/AnywareInterview/cpp/build` and run
 
 ```bash
 cmake ..
-cmake --build . -j 2
+cmake --build . -j 4
 ```
 
-Then run the executable `ompl_hello_world` to see the results
+Then run the executable `interview` to see the results
 
 ```bash
-./ompl_hello_world
+./interview
 ```
 
 ## C++ Version Visualization
@@ -75,6 +75,14 @@ python3 visualize.py
 ```
 
 to visualize the results.
+
+## Sample Trajectories
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/8894b5f6-6905-454f-b794-409bc1db4e2f
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/30d0ea69-b0d2-4127-8ab6-ed6a68e8de20
+
+https://github.com/BolunDai0216/AnywareInterview/assets/36321182/9ec235dc-3e9b-4a9a-a30f-836b51aac2d0
 
 ## C++ Version Changing the Environment
 
