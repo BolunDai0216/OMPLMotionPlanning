@@ -64,8 +64,11 @@ private:
   hpp::fcl::Box box2_col;
   hpp::fcl::Box box3_col;
 
-  Eigen::Matrix4d T_link_offset;
+  Eigen::Matrix4d T_link1_offset;
+  Eigen::Matrix4d T_link2_offset;
+  Eigen::Matrix4d T_link3_offset;
   Eigen::Matrix4d T_box_offset;
+
   mutable Eigen::Matrix4d T_link1;
   mutable Eigen::Matrix4d T_link2;
   mutable Eigen::Matrix4d T_link3;

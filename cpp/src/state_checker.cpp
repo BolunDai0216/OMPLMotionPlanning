@@ -14,20 +14,35 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
   link3Id = model.getFrameId("link3");
   boxId = model.getFrameId("box");
 
+  double link1_l = 0.5;  // link 1 length
+  double link2_l = 0.5;  // link 2 length
+  double link3_l = 0.5;  // link 3 length
+  double link_w = 0.1;   // link width
+  double box_l = 0.4;    // target box length
+  double box_w = 0.3;    // target box width
+  double box1_l = 0.4;   // box 1 length
+  double box1_w = 0.3;   // box 1 width
+  double box2_l = 0.4;   // box 2 length
+  double box2_w = 0.3;   // box 2 width
+  double box3_l = 0.4;   // box 3 length
+  double box3_w = 0.3;   // box 3 width
+
   // set collision objects for each link
-  link1_col = hpp::fcl::Box(0.5, 0.1, 0.1);
-  link2_col = hpp::fcl::Box(0.5, 0.1, 0.1);
-  link3_col = hpp::fcl::Box(0.5, 0.1, 0.1);
-  box_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+  link1_col = hpp::fcl::Box(link1_l, link_w, 0.1);
+  link2_col = hpp::fcl::Box(link2_l, link_w, 0.1);
+  link3_col = hpp::fcl::Box(link3_l, link_w, 0.1);
+  box_col = hpp::fcl::Box(box_l, box_w, 0.1);
 
   // set collision objects for each box
-  box1_col = hpp::fcl::Box(0.4, 0.3, 0.1);
-  box2_col = hpp::fcl::Box(0.4, 0.3, 0.1);
-  box3_col = hpp::fcl::Box(0.4, 0.3, 0.1);
+  box1_col = hpp::fcl::Box(box1_l, box1_w, 0.1);
+  box2_col = hpp::fcl::Box(box2_l, box2_w, 0.1);
+  box3_col = hpp::fcl::Box(box3_l, box3_w, 0.1);
 
   // define offsets
-  T_link_offset << 1.0, 0.0, 0.0, 0.25, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
-  T_box_offset << 1.0, 0.0, 0.0, 0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+  T_link1_offset << 1.0, 0.0, 0.0, link1_l / 2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+  T_link2_offset << 1.0, 0.0, 0.0, link2_l / 2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+  T_link3_offset << 1.0, 0.0, 0.0, link3_l / 2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+  T_box_offset << 1.0, 0.0, 0.0, box_l / 2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
 
   // define link transforms
   T_link1_fcl = hpp::fcl::Transform3f();
@@ -74,9 +89,9 @@ bool CustomStateValidityChecker::isValid(const ob::State* state) const
   pinocchio::updateFramePlacements(model, data);
 
   // get the link transforms
-  T_link1 = data.oMf[link1Id].toHomogeneousMatrix() * T_link_offset;
-  T_link2 = data.oMf[link2Id].toHomogeneousMatrix() * T_link_offset;
-  T_link3 = data.oMf[link3Id].toHomogeneousMatrix() * T_link_offset;
+  T_link1 = data.oMf[link1Id].toHomogeneousMatrix() * T_link1_offset;
+  T_link2 = data.oMf[link2Id].toHomogeneousMatrix() * T_link2_offset;
+  T_link3 = data.oMf[link3Id].toHomogeneousMatrix() * T_link3_offset;
   T_box = data.oMf[boxId].toHomogeneousMatrix() * T_box_offset;
 
   T_link1_pin = pinocchio::SE3(T_link1);
