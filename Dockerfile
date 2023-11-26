@@ -25,5 +25,9 @@ RUN echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robot
 RUN apt-get update && apt-get install -qqy \
     robotpkg-py38-pinocchio
 
+WORKDIR /home
+
+RUN git clone https://github.com/BolunDai0216/AnywareInterview.git
+
 # Specify the command to run on container start
 CMD ["bash"]
