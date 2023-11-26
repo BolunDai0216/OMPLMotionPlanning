@@ -14,7 +14,7 @@ int main(int /*argc*/, char** /*argv*/)
 
   try
   {
-    YAML::Node config = YAML::LoadFile("/home/AnywareInterview/cpp/config.yaml");
+    YAML::Node config = YAML::LoadFile("/home/AnywareInterview/cpp/configs/config.yaml");
     q1_start = config["q1_start"].as<double>();
     q2_start = config["q2_start"].as<double>();
     q3_start = config["q3_start"].as<double>();

@@ -14,7 +14,7 @@ int main(int /*argc*/, char** /*argv*/)
 
   try
   {
-    YAML::Node config = YAML::LoadFile("/home/AnywareInterview/cpp/preplan_config.yaml");
+    YAML::Node config = YAML::LoadFile("/home/AnywareInterview/cpp/configs/preplan_config.yaml");
     goal_x = config["goal_x"].as<double>();
     goal_y = config["goal_y"].as<double>();
     goal_z = config["goal_z"].as<double>();
