@@ -1,4 +1,6 @@
+import hppfcl
 import numpy as np
+import pinocchio as pin
 import pybullet as p
 import pybullet_data
 
@@ -25,6 +27,23 @@ def main():
     p.resetBasePositionAndOrientation(box1, [1.5, 0.5, 0.05], [0, 0, 0, 1])
     p.resetBasePositionAndOrientation(box2, [1.0, 0.0, 0.05], [0, 0, 0, 1])
     p.resetBasePositionAndOrientation(box3, [1.5, 0.0, 0.05], [0, 0, 0, 1])
+
+    box1_quat = pin.Quaternion(1, 0, 0, 0)
+    box2_quat = pin.Quaternion(1, 0, 0, 0)
+    box3_quat = pin.Quaternion(1, 0, 0, 0)
+
+    box1_R = box1_quat.toRotationMatrix()
+    box2_R = box2_quat.toRotationMatrix()
+    box3_R = box3_quat.toRotationMatrix()
+
+    T_box1 = hppfcl.Transform3f(box1_R, np.array([1.5, 0.5, 0.05]))
+    T_box2 = hppfcl.Transform3f(box2_R, np.array([1.0, 0.0, 0.05]))
+    T_box3 = hppfcl.Transform3f(box3_R, np.array([1.5, 0.0, 0.05]))
+
+    box1_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
+    box2_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
+    box3_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
+    box_cols = [(box1_col, T_box1), (box2_col, T_box2), (box3_col, T_box3)]
 
     # Get number of joints
     n_j = p.getNumJoints(robotID)
@@ -72,7 +91,12 @@ def main():
             q[joint_id] = _joint_angle
 
         info = robot.get_state(q)
-        print(info["box_pos"])
+        in_collsion = robot.check_collision(info, box_cols)
+
+        if in_collsion:
+            print("Collision detected!")
+        else:
+            print("No collision detected!")
 
         p.stepSimulation()
 

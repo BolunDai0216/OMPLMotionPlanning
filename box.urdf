@@ -7,7 +7,7 @@
                 <box size="0.4 0.3 0.1"/>
             </geometry>
             <material name="cornflowerblue">
-                <color rgba="0.3921 0.5843 0.9294 1.0"/>
+                <color rgba="0.3921 0.5843 0.9294 0.5"/>
             </material>
         </visual>
 
