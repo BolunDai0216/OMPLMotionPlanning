@@ -11,6 +11,7 @@ def main():
     p.connect(p.GUI)
     p.setAdditionalSearchPath(pybullet_data.getDataPath())
     p.setGravity(0, 0, -9.81)
+    # p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 
     # Load plane
     p.loadURDF("plane.urdf")
@@ -24,9 +25,9 @@ def main():
     box1 = p.loadURDF(box_URDF, useFixedBase=True)
     box2 = p.loadURDF(box_URDF, useFixedBase=True)
     box3 = p.loadURDF(box_URDF, useFixedBase=True)
-    p.resetBasePositionAndOrientation(box1, [1.5, 0.5, 0.05], [0, 0, 0, 1])
-    p.resetBasePositionAndOrientation(box2, [1.0, 0.0, 0.05], [0, 0, 0, 1])
-    p.resetBasePositionAndOrientation(box3, [1.5, 0.0, 0.05], [0, 0, 0, 1])
+    p.resetBasePositionAndOrientation(box1, [1.45, 1.0, 0.05], [0, 0, 0, 1])
+    p.resetBasePositionAndOrientation(box2, [1.25, 0.2, 0.05], [0, 0, 0, 1])
+    p.resetBasePositionAndOrientation(box3, [1.65, 0.2, 0.05], [0, 0, 0, 1])
 
     box1_quat = pin.Quaternion(1, 0, 0, 0)
     box2_quat = pin.Quaternion(1, 0, 0, 0)
@@ -36,9 +37,9 @@ def main():
     box2_R = box2_quat.toRotationMatrix()
     box3_R = box3_quat.toRotationMatrix()
 
-    T_box1 = hppfcl.Transform3f(box1_R, np.array([1.5, 0.5, 0.05]))
-    T_box2 = hppfcl.Transform3f(box2_R, np.array([1.0, 0.0, 0.05]))
-    T_box3 = hppfcl.Transform3f(box3_R, np.array([1.5, 0.0, 0.05]))
+    T_box1 = hppfcl.Transform3f(box1_R, np.array([1.45, 0.10, 0.05]))
+    T_box2 = hppfcl.Transform3f(box2_R, np.array([1.25, 0.2, 0.05]))
+    T_box3 = hppfcl.Transform3f(box3_R, np.array([1.65, 0.2, 0.05]))
 
     box1_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
     box2_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
@@ -51,10 +52,13 @@ def main():
     debug_sliders = []
     joint_ids = []
 
-    default_joint_angles = [0.0, 0.0, 0.0]
+    default_joint_angles = [0.611, 0.215, -0.826]
     counter = 0
 
     robot = Robot()
+
+    for joint_id, _joint_angle in enumerate([0.611, 0.215, -0.826]):
+        p.resetJointState(robotID, joint_id, _joint_angle)
 
     for i in range(n_j):
         # get info of each joint
@@ -75,9 +79,9 @@ def main():
             joint_ids.append(_joint_infos[0])
             counter += 1
 
-    while True:
-        q = np.zeros(3)
+    q = np.zeros(3)
 
+    while True:
         for slider_id, joint_id in zip(debug_sliders, joint_ids):
             # Get joint angle from debug slider
             try:
@@ -93,10 +97,12 @@ def main():
         info = robot.get_state(q)
         in_collsion = robot.check_collision(info, box_cols)
 
-        if in_collsion:
-            print("Collision detected!")
-        else:
-            print("No collision detected!")
+        # if in_collsion:
+        #     print("Collision detected!")
+        # else:
+        #     print("No collision detected!")
+
+        print(q, info["box_pos"])
 
         p.stepSimulation()
 
