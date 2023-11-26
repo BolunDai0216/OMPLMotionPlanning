@@ -11,9 +11,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libompl-dev \
-    ompl-demos
-
-RUN apt-get install -qqy \
+    ompl-demos \
     cmake \
     lsb-release
 
@@ -40,7 +38,7 @@ RUN git clone https://github.com/BolunDai0216/AnywareInterview.git
 
 WORKDIR /home/AnywareInterview/cpp
 
-RUN mkdir build && cd build && cmake .. && cmake --build .
+RUN mkdir build
 
 # Specify the command to run on container start
 CMD ["bash"]
