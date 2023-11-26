@@ -50,14 +50,15 @@ public:
     double q2 = realState->values[1];
     double q3 = realState->values[2];
 
-    Eigen::Vector3d vec(q1, q2, q3);
-    Eigen::VectorXd dq = Eigen::VectorXd::Zero(model.nv);
+    Eigen::Matrix<double, 3, 1> q;
+    q << q1, q2, q3;
+
+    Eigen::Matrix<double, 3, 1> dq;
+    dq << 0.0, 0.0, 0.0;
 
     // update pinocchio robot model
     pinocchio::forwardKinematics(model, data, q, dq);
-    pinocchio::updateFramePlacements(model, data);
-
-    std::cout << x << std::endl;
+    // pinocchio::updateFramePlacements(model, data);
 
     return true;
   }
