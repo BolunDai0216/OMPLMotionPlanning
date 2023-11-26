@@ -41,6 +41,9 @@ public:
     data = pinocchio::Data(model);
 
     link1Id = model.getFrameId("link1");
+    link2Id = model.getFrameId("link2");
+    link3Id = model.getFrameId("link3");
+    boxId = model.getFrameId("box");
   }
 
   // Check if a state is valid
@@ -62,7 +65,9 @@ public:
 
     // update pinocchio robot model
     pinocchio::forwardKinematics(model, data, q, dq);
-    // pinocchio::updateFramePlacements(model, data);
+    pinocchio::updateFramePlacements(model, data);
+
+    std::cout << data.oMf[boxId].translation() << std::endl;
 
     return true;
   }
