@@ -1,32 +1,36 @@
-#include "state_checker2.hpp"
+#include "state_checker.hpp"
 #include <iostream>
 #include <cmath>
 
-CustomStateValidityChecker::CustomStateValidityChecker(const ompl::base::SpaceInformationPtr& si)
-  : ompl::base::StateValidityChecker(si)
+CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
 {
   // build pin_robot from urdf
   urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
   pinocchio::urdf::buildModel(urdf_filename, model);
   data = pinocchio::Data(model);
 
+  // get link frame indices
   link1Id = model.getFrameId("link1");
   link2Id = model.getFrameId("link2");
   link3Id = model.getFrameId("link3");
   boxId = model.getFrameId("box");
 
+  // set collision objects for each link
   link1_col = hpp::fcl::Box(0.5, 0.1, 0.1);
   link2_col = hpp::fcl::Box(0.5, 0.1, 0.1);
   link3_col = hpp::fcl::Box(0.5, 0.1, 0.1);
   box_col = hpp::fcl::Box(0.4, 0.3, 0.1);
 
+  // set collision objects for each box
   box1_col = hpp::fcl::Box(0.4, 0.3, 0.1);
   box2_col = hpp::fcl::Box(0.4, 0.3, 0.1);
   box3_col = hpp::fcl::Box(0.4, 0.3, 0.1);
 
+  // define offsets
   T_link_offset << 1.0, 0.0, 0.0, 0.25, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
   T_box_offset << 1.0, 0.0, 0.0, 0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
 
+  // define box transforms
   R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
   R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
   R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
@@ -39,26 +43,28 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ompl::base::SpaceIn
   T_box2_fcl = hpp::fcl::Transform3f(R_box2, p_box2);
   T_box3_fcl = hpp::fcl::Transform3f(R_box3, p_box3);
 
+  box_transforms.push_back(T_box1_fcl);
+  box_transforms.push_back(T_box2_fcl);
+  box_transforms.push_back(T_box3_fcl);
+
+  // define link transforms
   T_link1_fcl = hpp::fcl::Transform3f();
   T_link2_fcl = hpp::fcl::Transform3f();
   T_link3_fcl = hpp::fcl::Transform3f();
   T_box_fcl = hpp::fcl::Transform3f();
-
-  box_transforms.push_back(T_box1_fcl);
-  box_transforms.push_back(T_box2_fcl);
-  box_transforms.push_back(T_box3_fcl);
 }
 
-bool CustomStateValidityChecker::isValid(const ompl::base::State* state) const
+bool CustomStateValidityChecker::isValid(const ob::State* state) const
 {
-  // Cast the state to the specific type of your state space, e.g., RealVectorStateSpace
+  // cast the state to the RealVectorStateSpace
   const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
 
-  // Access the elements
+  // access the elements
   double q1 = realState->values[0];
   double q2 = realState->values[1];
   double q3 = realState->values[2];
 
+  // set the joint angle and joint velocity vectors
   Eigen::Matrix<double, 3, 1> q;
   q << q1, q2, q3;
 
@@ -69,6 +75,7 @@ bool CustomStateValidityChecker::isValid(const ompl::base::State* state) const
   pinocchio::forwardKinematics(model, data, q, dq);
   pinocchio::updateFramePlacements(model, data);
 
+  // get the link transforms
   T_link1 = data.oMf[link1Id].toHomogeneousMatrix() * T_link_offset;
   T_link2 = data.oMf[link2Id].toHomogeneousMatrix() * T_link_offset;
   T_link3 = data.oMf[link3Id].toHomogeneousMatrix() * T_link_offset;
@@ -84,9 +91,7 @@ bool CustomStateValidityChecker::isValid(const ompl::base::State* state) const
   T_link3_fcl.setTransform(T_link3_pin.rotation(), T_link3_pin.translation());
   T_box_fcl.setTransform(T_box_pin.rotation(), T_box_pin.translation());
 
-  hpp::fcl::CollisionRequest req;
-  hpp::fcl::CollisionResult res;
-
+  // check for collisions
   bool col11 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link1_col, T_link1_fcl, req, res);
   res.clear();
   bool col12 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link2_col, T_link2_fcl, req, res);
