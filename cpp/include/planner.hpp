@@ -27,7 +27,7 @@ public:
     sum = std::pow(q1 - 0.0, 2) + std::pow(q2 + pi / 2, 2) + std::pow(q3 - 0.0, 2);
     error = std::sqrt(sum);
 
-    if (error < 0.1)
+    if (error <= 0.5)
     {
       return true;
     }
