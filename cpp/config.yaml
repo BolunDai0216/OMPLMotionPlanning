@@ -2,7 +2,7 @@ q1_start: 0.611
 q2_start: 0.215
 q3_start: -0.826
 goal_x: 0.5
-goal_y: -1.0
+goal_y: 1.0
 goal_z: 0.05
 box1_x: 1.45
 box1_y: 1.0
