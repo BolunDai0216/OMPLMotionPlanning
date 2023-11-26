@@ -1,3 +1,5 @@
+#include <Eigen/Dense>
+
 #include <ompl/base/SpaceInformation.h>
 #include <ompl/base/StateValidityChecker.h>
 #include <ompl/base/spaces/SE3StateSpace.h>
@@ -5,6 +7,7 @@
 #include <ompl/geometric/SimpleSetup.h>
 #include <ompl/config.h>
 
+#include <pinocchio/algorithm/kinematics.hpp>
 #include <pinocchio/multibody/model.hpp>
 #include <pinocchio/multibody/data.hpp>
 #include <pinocchio/parsers/urdf.hpp>
@@ -29,6 +32,8 @@ public:
     std::string urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
     pinocchio::urdf::buildModel(urdf_filename, model);
     data = pinocchio::Data(model);
+
+    pinocchio::Model::FrameIndex link1Id = model.getFrameId("link1");
   }
 
   // Check if a state is valid
@@ -38,9 +43,16 @@ public:
     const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
 
     // Access the elements
-    double x = realState->values[0];
-    double y = realState->values[1];
-    double z = realState->values[2];
+    double q1 = realState->values[0];
+    double q2 = realState->values[1];
+    double q3 = realState->values[2];
+
+    Eigen::Vector3d vec(q1, q2, q3);
+    Eigen::VectorXd dq = Eigen::VectorXd::Zero(model.nv);
+
+    // update pinocchio robot model
+    pinocchio::forwardKinematics(model, data, q, dq);
+    pinocchio::updateFramePlacements(model, data);
 
     std::cout << x << std::endl;
 
