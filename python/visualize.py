@@ -1,6 +1,7 @@
 import pickle
 import time
 import pybullet
+import argparse
 
 import numpy as np
 from env import Env
@@ -11,21 +12,29 @@ def distance(v1, v2):
 
 
 def main():
-    # with open("../data/path.pkl", "rb") as f:
-    #     path = pickle.load(f)
-
-    path = [
-        [0.611, 0.215, -0.826],
-        [1.35408, -0.384872, -1.32297],
-        [1.96655, -0.0837118, -1.18028],
-        [2.59736, 0.331914, -0.954574],
-        [3.00716, 0.553205, -0.765477],
-    ]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--from-pickle", action="store_true")
+    args = parser.parse_args()
 
     env = Env()
     env.reset()
-    target = pybullet.loadURDF("robots/target.urdf", useFixedBase=True)
-    pybullet.resetBasePositionAndOrientation(target, [-1.5, 0.0, 0.05], [0, 0, 0, 1])
+
+    if args.from_pickle:
+        with open("../data/path.pkl", "rb") as f:
+            path = pickle.load(f)
+    else:
+        path = [
+            [0.611, 0.215, -0.826],
+            [1.35408, -0.384872, -1.32297],
+            [1.96655, -0.0837118, -1.18028],
+            [2.59736, 0.331914, -0.954574],
+            [3.00716, 0.553205, -0.765477],
+        ]
+
+        target = pybullet.loadURDF("robots/target.urdf", useFixedBase=True)
+        pybullet.resetBasePositionAndOrientation(
+            target, [-1.5, 0.0, 0.05], [0, 0, 0, 1]
+        )
 
     n = len(path)
     distance_threshold = 0.01
