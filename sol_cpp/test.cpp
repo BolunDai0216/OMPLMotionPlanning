@@ -74,6 +74,16 @@ public:
   Eigen::Vector3d p_box2;
   Eigen::Vector3d p_box3;
 
+  mutable pinocchio::SE3 T_link1_pin;
+  mutable pinocchio::SE3 T_link2_pin;
+  mutable pinocchio::SE3 T_link3_pin;
+  mutable pinocchio::SE3 T_box_pin;
+
+  mutable hpp::fcl::Transform3f T_link1_fcl;
+  mutable hpp::fcl::Transform3f T_link2_fcl;
+  mutable hpp::fcl::Transform3f T_link3_fcl;
+  mutable hpp::fcl::Transform3f T_box_fcl;
+
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
     // build pin_robot from urdf
@@ -109,6 +119,11 @@ public:
     T_box1_fcl = hpp::fcl::Transform3f(R_box1, p_box1);
     T_box2_fcl = hpp::fcl::Transform3f(R_box2, p_box2);
     T_box3_fcl = hpp::fcl::Transform3f(R_box3, p_box3);
+
+    T_link1_fcl = hpp::fcl::Transform3f();
+    T_link2_fcl = hpp::fcl::Transform3f();
+    T_link3_fcl = hpp::fcl::Transform3f();
+    T_box_fcl = hpp::fcl::Transform3f();
   }
 
   // Check if a state is valid
@@ -136,6 +151,16 @@ public:
     T_link2 = data.oMf[link2Id].toHomogeneousMatrix() * T_link_offset;
     T_link3 = data.oMf[link3Id].toHomogeneousMatrix() * T_link_offset;
     T_box = data.oMf[boxId].toHomogeneousMatrix() * T_box_offset;
+
+    T_link1_pin = pinocchio::SE3(T_link1);
+    T_link2_pin = pinocchio::SE3(T_link2);
+    T_link3_pin = pinocchio::SE3(T_link3);
+    T_box_pin = pinocchio::SE3(T_box);
+
+    T_link1_fcl.setTransform(T_link1_pin.rotation(), T_link1_pin.translation());
+    T_link2_fcl.setTransform(T_link2_pin.rotation(), T_link2_pin.translation());
+    T_link3_fcl.setTransform(T_link3_pin.rotation(), T_link3_pin.translation());
+    T_box_fcl.setTransform(T_box_pin.rotation(), T_box_pin.translation());
 
     std::cout << T_box << std::endl;
 
