@@ -1,4 +1,5 @@
 #include "state_checker.hpp"
+#include <pinocchio/math/rpy.hpp>
 
 CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
 {
@@ -38,9 +39,12 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
 void CustomStateValidityChecker::setBoxPose()
 {
   // set box pose
-  R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
-  R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
+  // R_box1 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
+  // R_box2 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
+  // R_box3 << 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0;
+  R_box1 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
+  R_box2 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
+  R_box3 = pinocchio::rpy::rpyToMatrix(0.0, 0.0, 0.0);
 
   p_box1 << 1.55, 1.0, 0.05;
   p_box2 << 1.35, 0.2, 0.05;
