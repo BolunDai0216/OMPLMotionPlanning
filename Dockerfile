@@ -25,6 +25,13 @@ RUN echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robot
 RUN apt-get update && apt-get install -qqy \
     robotpkg-py38-pinocchio
 
+RUN echo "export PATH=/opt/openrobots/bin:$PATH" >> ~/.bashrc 
+RUN echo "export PKG_CONFIG_PATH=/opt/openrobots/lib/pkgconfig:$PKG_CONFIG_PATH" >> ~/.bashrc 
+RUN echo "export LD_LIBRARY_PATH=/opt/openrobots/lib:$LD_LIBRARY_PATH" >> ~/.bashrc 
+RUN echo "export PYTHONPATH=/opt/openrobots/lib/python3.8/site-packages:$PYTHONPATH" >> ~/.bashrc
+RUN echo "export CMAKE_PREFIX_PATH=/opt/openrobots:$CMAKE_PREFIX_PATH" >> ~/.bashrc 
+
+
 WORKDIR /home
 
 RUN git clone https://github.com/BolunDai0216/AnywareInterview.git
