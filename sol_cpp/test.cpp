@@ -58,6 +58,22 @@ public:
   mutable Eigen::Matrix4d T_link3;
   mutable Eigen::Matrix4d T_box;
 
+  mutable hpp::fcl::Transform3f T_link1_fcl;
+  mutable hpp::fcl::Transform3f T_link2_fcl;
+  mutable hpp::fcl::Transform3f T_link3_fcl;
+  mutable hpp::fcl::Transform3f T_box_fcl;
+
+  hpp::fcl::Transform3f T_box1_fcl;
+  hpp::fcl::Transform3f T_box2_fcl;
+  hpp::fcl::Transform3f T_box3_fcl;
+
+  Eigen::Matrix3d R_box1;
+  Eigen::Matrix3d R_box2;
+  Eigen::Matrix3d R_box3;
+  Eigen::Vector3d p_box1;
+  Eigen::Vector3d p_box2;
+  Eigen::Vector3d p_box3;
+
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
     // build pin_robot from urdf
@@ -81,6 +97,8 @@ public:
 
     T_link_offset << 1.0, 0.0, 0.0, 0.25, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
     T_box_offset << 1.0, 0.0, 0.0, 0.2, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.05, 0.0, 0.0, 0.0, 1.0;
+
+    // T_box1_fcl = hpp::fcl::Transform3f();
   }
 
   // Check if a state is valid
