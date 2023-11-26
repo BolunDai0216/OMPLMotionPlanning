@@ -42,14 +42,14 @@ public:
   pinocchio::Model::FrameIndex link3Id;
   pinocchio::Model::FrameIndex boxId;
 
-  hpp::fcl::CollisionGeometryPtr_t link1_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
-  hpp::fcl::CollisionGeometryPtr_t link2_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
-  hpp::fcl::CollisionGeometryPtr_t link3_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
-  hpp::fcl::CollisionGeometryPtr_t box_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  hpp::fcl::Box link1_col(1, 1, 1);
+  //   hpp::fcl::CollisionGeometryPtr_t link2_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
+  //   hpp::fcl::CollisionGeometryPtr_t link3_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
+  //   hpp::fcl::CollisionGeometryPtr_t box_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
 
-  hpp::fcl::CollisionGeometryPtr_t box1_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
-  hpp::fcl::CollisionGeometryPtr_t box2_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
-  hpp::fcl::CollisionGeometryPtr_t box3_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  //   hpp::fcl::CollisionGeometryPtr_t box1_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  //   hpp::fcl::CollisionGeometryPtr_t box2_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  //   hpp::fcl::CollisionGeometryPtr_t box3_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
