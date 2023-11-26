@@ -4,6 +4,10 @@
 #include <ompl/base/goals/GoalRegion.h>
 #include <ompl/base/spaces/RealVectorStateSpace.h>
 
+#include <cmath>
+
+const double pi = M_PI;  // π as a double
+
 class CustomGoal : public ompl::base::GoalRegion
 {
 public:
