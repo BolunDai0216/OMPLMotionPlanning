@@ -25,8 +25,8 @@ public:
 
     // build pin_robot from urdf
     std::string urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
-    pin::urdf::buildModel(urdf_filename, model);
-    data = pin::Data(model);
+    pinocchio::urdf::buildModel(urdf_filename, model);
+    data = pinocchio::Data(model);
   }
 
   // Check if a state is valid
