@@ -1,5 +1,4 @@
-#ifndef STATE_CHECKER_HPP
-#define STATE_CHECKER_HPP
+#pragma once
 
 #include <Eigen/Dense>
 
@@ -89,5 +88,3 @@ private:
   mutable hpp::fcl::CollisionRequest req;
   mutable hpp::fcl::CollisionResult res;
 };
-
-#endif  // STATE_CHECKER_HPP

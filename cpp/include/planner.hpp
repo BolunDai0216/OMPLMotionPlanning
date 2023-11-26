@@ -1,49 +1,21 @@
-#ifndef PLANNER_HPP
-#define PLANNER_HPP
+#pragma once
 
 #include <ompl/base/goals/GoalRegion.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
 
 #include <iostream>
 #include "state_checker.hpp"
+#include "goal_checker.hpp"
 
-class CustomGoal : public ompl::base::GoalRegion
-{
-public:
-  MyGoalRegion(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
-  {
-    setThreshold(0.1);
-  }
-
-  virtual double distanceGoal(const ompl::base::State* state) const
-  {
-    // cast the state to the RealVectorStateSpace
-    const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
-
-    // access the elements
-    double q1 = realState->values[0];
-    double q2 = realState->values[1];
-    double q3 = realState->values[2];
-
-    sum = std::pow(q1 - 0.0, 2) + std::pow(q2 + pi / 2, 2) + std::pow(q3 - 0.0, 2);
-    error = std::sqrt(sum);
-
-    return error;
-  }
-
-private:
-  mutable double sum;
-  mutable double error;
-};
-
-// class CustomGoal : public ompl::base::Goal
+// class CustomGoal : public ompl::base::GoalRegion
 // {
 // public:
-//   CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::Goal(si)
+//   CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::GoalRegion(si)
 //   {
+//     setThreshold(0.3);
 //   }
 
-//   virtual bool isSatisfied(const ompl::base::State* state) const override
+//   virtual double distanceGoal(const ompl::base::State* state) const
 //   {
 //     // cast the state to the RealVectorStateSpace
 //     const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
@@ -56,14 +28,7 @@ private:
 //     sum = std::pow(q1 - 0.0, 2) + std::pow(q2 + pi / 2, 2) + std::pow(q3 - 0.0, 2);
 //     error = std::sqrt(sum);
 
-//     if (error <= 0.1)
-//     {
-//       return true;
-//     }
-//     else
-//     {
-//       return false;
-//     }
+//     return error;
 //   }
 
 // private:
@@ -147,5 +112,3 @@ void plan()
   else
     std::cout << "No solution found" << std::endl;
 }
-
-#endif  // PLANNER_HPP
