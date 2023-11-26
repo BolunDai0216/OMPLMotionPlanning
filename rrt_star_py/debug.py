@@ -3,7 +3,6 @@ import numpy as np
 import pinocchio as pin
 import pybullet as p
 import pybullet_data
-
 from robot import Robot
 
 
@@ -17,11 +16,11 @@ def main():
     p.loadURDF("plane.urdf")
 
     # Load Robot
-    robot_URDF = "robot.urdf"
+    robot_URDF = "robots/robot.urdf"
     robotID = p.loadURDF(robot_URDF, useFixedBase=True)
 
     # Load box
-    box_URDF = "box.urdf"
+    box_URDF = "robots/box.urdf"
     box1 = p.loadURDF(box_URDF, useFixedBase=True)
     box2 = p.loadURDF(box_URDF, useFixedBase=True)
     box3 = p.loadURDF(box_URDF, useFixedBase=True)

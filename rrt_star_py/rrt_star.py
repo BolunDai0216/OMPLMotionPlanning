@@ -1,10 +1,12 @@
+import pickle
+
+import hppfcl
 import numpy as np
+import pinocchio as pin
 from graph import Graph
 from rich.progress import track
-from rrt_utils import Scene, steer
 from robot import Robot
-import pinocchio as pin
-import hppfcl
+from rrt_utils import Scene, steer
 
 
 class RRTScene(Scene):
@@ -22,9 +24,9 @@ class RRTScene(Scene):
         box2_R = box2_quat.toRotationMatrix()
         box3_R = box3_quat.toRotationMatrix()
 
-        T_box1 = hppfcl.Transform3f(box1_R, np.array([1.45, 1.0, 0.05]))
-        T_box2 = hppfcl.Transform3f(box2_R, np.array([1.25, 0.2, 0.05]))
-        T_box3 = hppfcl.Transform3f(box3_R, np.array([1.65, 0.2, 0.05]))
+        T_box1 = hppfcl.Transform3f(box1_R, np.array([1.55, 1.0, 0.05]))
+        T_box2 = hppfcl.Transform3f(box2_R, np.array([1.35, 0.2, 0.05]))
+        T_box3 = hppfcl.Transform3f(box3_R, np.array([1.75, 0.2, 0.05]))
 
         box1_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
         box2_col = hppfcl.Box(np.array([0.4, 0.3, 0.1]))
@@ -97,7 +99,8 @@ def main():
                 path = graph.get_path(v_new)
                 break
 
-    breakpoint()
+    with open("../data/path.pkl", "wb") as f:
+        pickle.dump(path, f)
 
 
 if __name__ == "__main__":

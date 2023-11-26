@@ -6,7 +6,7 @@ from pinocchio.robot_wrapper import RobotWrapper
 
 class Robot:
     def __init__(self):
-        robot_URDF = "robot.urdf"
+        robot_URDF = "robots/robot.urdf"
         self.robot = RobotWrapper.BuildFromURDF(robot_URDF)
 
         self.link1_id = self.robot.model.getFrameId("link1")
