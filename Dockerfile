@@ -30,7 +30,8 @@ ENV PYTHONPATH "/opt/openrobots/lib/python3.8/site-packages:${PYTHONPATH}"
 ENV CMAKE_PREFIX_PATH "/opt/openrobots:${CMAKE_PREFIX_PATH}"
 
 RUN apt-get install -qqy \
-    vim
+    vim \
+    libyaml-cpp-dev
 
 WORKDIR /home
 

@@ -69,7 +69,7 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
   pdef->print(std::cout);
 
   // attempt to solve the problem within ten seconds of planning time
-  ob::PlannerStatus solved = planner->ob::Planner::solve(10.0);
+  ob::PlannerStatus solved = planner->ob::Planner::solve(20.0);
 
   if (solved)
   {
