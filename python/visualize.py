@@ -1,9 +1,9 @@
+import argparse
 import pickle
 import time
-import pybullet
-import argparse
 
 import numpy as np
+import pybullet
 from env import Env
 
 
