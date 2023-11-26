@@ -7,10 +7,14 @@
 #include <ompl/geometric/SimpleSetup.h>
 #include <ompl/config.h>
 
-#include <pinocchio/algorithm/kinematics.hpp>
-#include <pinocchio/multibody/model.hpp>
-#include <pinocchio/multibody/data.hpp>
+#include <pinocchio/fwd.hpp>
 #include <pinocchio/parsers/urdf.hpp>
+#include <pinocchio/algorithm/joint-configuration.hpp>
+#include <pinocchio/algorithm/kinematics.hpp>
+#include <pinocchio/algorithm/jacobian.hpp>
+#include <pinocchio/algorithm/frames.hpp>
+#include <pinocchio/multibody/model.hpp>
+#include <pinocchio/algorithm/model.hpp>
 
 #include <iostream>
 #include <cmath>
@@ -24,7 +28,7 @@ class CustomStateValidityChecker : public ob::StateValidityChecker
 {
 public:
   pinocchio::Model model;
-  pinocchio::Data data;
+  mutable pinocchio::Data data;
   std::string urdf_filename;
 
   pinocchio::Model::FrameIndex link1Id;
