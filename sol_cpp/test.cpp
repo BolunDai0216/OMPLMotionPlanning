@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 const double pi = M_PI;  // π as a double
 namespace ob = ompl::base;
@@ -79,10 +80,8 @@ public:
   mutable pinocchio::SE3 T_link3_pin;
   mutable pinocchio::SE3 T_box_pin;
 
-  mutable hpp::fcl::Transform3f T_link1_fcl;
-  mutable hpp::fcl::Transform3f T_link2_fcl;
-  mutable hpp::fcl::Transform3f T_link3_fcl;
-  mutable hpp::fcl::Transform3f T_box_fcl;
+  std::vector<hpp::fcl::Transform3f> box_transforms;
+  mutable std::vector<hpp::fcl::Transform3f> link_transforms;
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
@@ -124,6 +123,10 @@ public:
     T_link2_fcl = hpp::fcl::Transform3f();
     T_link3_fcl = hpp::fcl::Transform3f();
     T_box_fcl = hpp::fcl::Transform3f();
+
+    box_transforms.push_back(T_box1_fcl);
+    box_transforms.push_back(T_box2_fcl);
+    box_transforms.push_back(T_box2_fcl);
   }
 
   // Check if a state is valid
