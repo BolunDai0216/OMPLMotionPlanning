@@ -2,6 +2,7 @@
 
 #include <ompl/base/goals/GoalRegion.h>
 #include <ompl/geometric/planners/rrt/RRTstar.h>
+#include <ompl/geometric/planners/rrt/RRTConnect.h>
 
 #include <iostream>
 #include <array>
