@@ -28,7 +28,6 @@
 
 #include "state_checker.hpp"
 
-const double pi = M_PI;  // π as a double
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
 

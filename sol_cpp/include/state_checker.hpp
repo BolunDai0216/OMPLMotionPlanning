@@ -1,3 +1,7 @@
+// state_checker.hpp
+#ifndef STATE_CHECKER_HPP
+#define STATE_CHECKER_HPP
+
 #include <Eigen/Dense>
 
 #include <ompl/base/SpaceInformation.h>
@@ -203,3 +207,5 @@ public:
     return in_collision;
   }
 };
+
+#endif  // STATE_CHECKER_HPP
