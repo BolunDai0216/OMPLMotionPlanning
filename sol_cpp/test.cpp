@@ -7,6 +7,7 @@
 
 #include <pinocchio/multibody/model.hpp>
 #include <pinocchio/multibody/data.hpp>
+#include <pinocchio/parsers/urdf.hpp>
 
 #include <iostream>
 #include <cmath>
@@ -22,6 +23,7 @@ public:
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
     pinocchio::Model model;
+    pinocchio::Data data;
 
     // build pin_robot from urdf
     std::string urdf_filename = "/home/AnywareInterview/rrt_star_py/robots/robot.urdf";
