@@ -82,7 +82,6 @@ public:
   mutable pinocchio::SE3 T_box_pin;
 
   std::vector<hpp::fcl::Transform3f> box_transforms;
-  mutable std::vector<hpp::fcl::Transform3f> link_transforms;
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
@@ -166,14 +165,15 @@ public:
     T_link3_fcl.setTransform(T_link3_pin.rotation(), T_link3_pin.translation());
     T_box_fcl.setTransform(T_box_pin.rotation(), T_box_pin.translation());
 
-    for (const auto& box_transform : box_transforms)
-    {
-      std::cout << "Translation: " << box_transform.getTranslation() << std::endl;
-      hpp::fcl::CollisionRequest req;
-      hpp::fcl::CollisionResult res;
-    }
+    std::vector<hpp::fcl::Transform3f> link_transforms{ T_link1_fcl, T_link2_fcl, T_link3_fcl, T_box_fcl };
 
-    return true;
+    hpp::fcl::CollisionRequest req;
+    hpp::fcl::CollisionResult res;
+
+    bool col11 = hpp::fcl::collide(&box1_col, T_box1_fcl, &link1_col, T_link1_fcl, req, res);
+    res.clear();
+
+    return col11;
   }
 };
 
