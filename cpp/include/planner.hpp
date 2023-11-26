@@ -36,6 +36,10 @@ public:
       return false;
     }
   }
+
+private:
+  mutable double sum;
+  mutable double error;
 };
 
 void plan()
@@ -80,7 +84,6 @@ void plan()
   auto pdef(std::make_shared<ob::ProblemDefinition>(si));
 
   // set the start and goal states
-  pdef->setStartAndGoalStates(start, goal);
   pdef->addStartState(start);
   pdef->setGoal(myCustomGoal);
 
