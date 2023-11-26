@@ -1,6 +1,4 @@
 #include "state_checker.hpp"
-#include <iostream>
-#include <cmath>
 
 CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
 {

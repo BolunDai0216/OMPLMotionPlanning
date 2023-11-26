@@ -5,9 +5,7 @@
 
 #include <ompl/base/SpaceInformation.h>
 #include <ompl/base/StateValidityChecker.h>
-#include <ompl/base/spaces/SE3StateSpace.h>
-#include <ompl/geometric/planners/rrt/RRTConnect.h>
-#include <ompl/geometric/SimpleSetup.h>
+#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/config.h>
 
 #include <pinocchio/fwd.hpp>
@@ -26,7 +24,6 @@
 #include <hpp/fcl/shape/geometric_shapes.h>
 
 #include <cmath>
-#include <iostream>
 #include <vector>
 
 const double pi = M_PI;  // π as a double

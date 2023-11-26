@@ -3,12 +3,12 @@
 
 #include <ompl/base/SpaceInformation.h>
 #include <ompl/base/StateValidityChecker.h>
-#include <ompl/base/spaces/SE3StateSpace.h>
+#include <ompl/base/spaces/RealVectorStateSpace.h>
 #include <ompl/geometric/planners/rrt/RRTConnect.h>
-#include <ompl/geometric/SimpleSetup.h>
 #include <ompl/config.h>
 
 #include <iostream>
+#include "state_checker.hpp"
 
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
@@ -35,7 +35,7 @@ void plan()
   auto si(std::make_shared<ob::SpaceInformation>(space));
 
   // set state validity checking for this space
-  si->setStateValidityChecker(std::make_shared<CustomStateValidityChecker>(si));
+  si->setStateValidityChecker(std::make_shared<StateValidityChecker>(si));
 
   // create a random start state
   ob::ScopedState<> start(space);
