@@ -16,12 +16,18 @@
 #include <pinocchio/multibody/model.hpp>
 #include <pinocchio/algorithm/model.hpp>
 
+#include <hpp/fcl/math/transform.h>
+#include <hpp/fcl/collision.h>
+#include <hpp/fcl/collision_object.h>
+#include <hpp/fcl/shape/geometric_shapes.h>
+
 #include <iostream>
 #include <cmath>
 
 const double pi = M_PI;  // π as a double
 namespace ob = ompl::base;
 namespace og = ompl::geometric;
+using hpp::fcl::CollisionGeometryPtr_t;
 
 // Custom State Validity Checker
 class CustomStateValidityChecker : public ob::StateValidityChecker
@@ -32,6 +38,18 @@ public:
   std::string urdf_filename;
 
   pinocchio::Model::FrameIndex link1Id;
+  pinocchio::Model::FrameIndex link2Id;
+  pinocchio::Model::FrameIndex link3Id;
+  pinocchio::Model::FrameIndex boxId;
+
+  hpp::fcl::CollisionGeometryPtr_t link1_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
+  hpp::fcl::CollisionGeometryPtr_t link2_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
+  hpp::fcl::CollisionGeometryPtr_t link3_col(new hpp::fcl::Box(0.5, 0.1, 0.1));
+  hpp::fcl::CollisionGeometryPtr_t box_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+
+  hpp::fcl::CollisionGeometryPtr_t box1_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  hpp::fcl::CollisionGeometryPtr_t box2_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
+  hpp::fcl::CollisionGeometryPtr_t box3_col(new hpp::fcl::Box(0.4, 0.3, 0.1));
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
@@ -67,7 +85,7 @@ public:
     pinocchio::forwardKinematics(model, data, q, dq);
     pinocchio::updateFramePlacements(model, data);
 
-    std::cout << data.oMf[boxId].translation() << std::endl;
+    std::cout << data.oMf[boxId].toHomogeneousMatrix() << std::endl;
 
     return true;
   }
