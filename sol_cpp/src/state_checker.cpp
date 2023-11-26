@@ -41,10 +41,6 @@ CustomStateValidityChecker::CustomStateValidityChecker(const ob::SpaceInformatio
   T_box2_fcl = hpp::fcl::Transform3f(R_box2, p_box2);
   T_box3_fcl = hpp::fcl::Transform3f(R_box3, p_box3);
 
-  box_transforms.push_back(T_box1_fcl);
-  box_transforms.push_back(T_box2_fcl);
-  box_transforms.push_back(T_box3_fcl);
-
   // define link transforms
   T_link1_fcl = hpp::fcl::Transform3f();
   T_link2_fcl = hpp::fcl::Transform3f();

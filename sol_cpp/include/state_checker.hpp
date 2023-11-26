@@ -25,7 +25,6 @@
 #include <hpp/fcl/shape/geometric_shapes.h>
 
 #include <cmath>
-#include <vector>
 
 const double pi = M_PI;  // π as a double
 namespace ob = ompl::base;
@@ -86,8 +85,6 @@ private:
   mutable pinocchio::SE3 T_link2_pin;
   mutable pinocchio::SE3 T_link3_pin;
   mutable pinocchio::SE3 T_box_pin;
-
-  std::vector<hpp::fcl::Transform3f> box_transforms;
 
   mutable hpp::fcl::CollisionRequest req;
   mutable hpp::fcl::CollisionResult res;
