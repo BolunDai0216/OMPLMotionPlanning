@@ -1,0 +1,15 @@
+q1_start: 0.611
+q2_start: 0.215
+q3_start: -0.826
+q1_goal: 0.0
+q2_goal: 0.0
+q3_goal: 0.0
+box1_x: 1.45
+box1_y: 1.0
+box1_theta: 0.0
+box2_x: 1.25
+box2_y: 0.2
+box2_theta: 0.0
+box3_x: 1.65
+box3_y: 0.2
+box3_theta: 0.0
