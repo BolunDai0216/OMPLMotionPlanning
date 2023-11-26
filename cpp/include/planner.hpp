@@ -2,7 +2,7 @@
 #define PLANNER_HPP
 
 #include <ompl/base/Goal.h>
-#include <ompl/geometric/planners/rrt/RRTConnect.h>
+#include <ompl/geometric/planners/rrt/RRTstar.h>
 
 #include <iostream>
 #include "state_checker.hpp"
@@ -88,7 +88,7 @@ void plan()
   pdef->setGoal(myCustomGoal);
 
   // create a planner for the defined space
-  auto planner(std::make_shared<og::RRTConnect>(si));
+  auto planner(std::make_shared<og::RRTstar>(si));
 
   // set the problem we are trying to solve for the planner
   planner->setProblemDefinition(pdef);
