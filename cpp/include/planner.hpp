@@ -41,17 +41,15 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
   start[1] = q_start[1];
   start[2] = q_start[2];
 
-  auto myCustomGoal = std::make_shared<CustomGoal>(si);
-  myCustomGoal->goal_x = goal[0];
-  myCustomGoal->goal_y = goal[1];
-  myCustomGoal->goal_z = goal[2];
+  auto customGoal = std::make_shared<CustomGoal>(si);
+  customGoal->setGoal(goal);
 
   // create a problem instance
   auto pdef(std::make_shared<ob::ProblemDefinition>(si));
 
   // set the start and goal states
   pdef->addStartState(start);
-  pdef->setGoal(myCustomGoal);
+  pdef->setGoal(customGoal);
 
   // create a planner for the defined space
   auto planner(std::make_shared<og::RRTstar>(si));

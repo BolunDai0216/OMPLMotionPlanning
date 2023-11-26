@@ -19,13 +19,20 @@ public:
   CustomGoal(const ompl::base::SpaceInformationPtr& si);
   virtual double distanceGoal(const ompl::base::State* state) const;
 
-  double goal_x;
-  double goal_y;
-  double goal_z;
+  /**
+   * @brief Set the Goal position
+   *
+   * @param goal x, y, z
+   **/
+  void setGoal(const std::array<double, 3>& goal);
 
 private:
   mutable double sum;
   mutable double error;
+
+  double goal_x;
+  double goal_y;
+  double goal_z;
 
   pinocchio::Model model;
   mutable pinocchio::Data data;

@@ -37,6 +37,12 @@ public:
 
   // Check if a state is valid
   bool isValid(const ob::State* state) const override;
+
+  /**
+   * @brief Set the Box Pose object
+   *
+   * @param box_pose x1, y1, theta1, x2, y2, theta2, x3, y3, theta3
+   **/
   void setBoxPose(const std::array<double, 9>& box_pose);
 
 private:

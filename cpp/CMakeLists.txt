@@ -5,7 +5,7 @@ project(interview)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Find the OMPL package
+# Find required packages
 find_package(ompl REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(pinocchio REQUIRED)
