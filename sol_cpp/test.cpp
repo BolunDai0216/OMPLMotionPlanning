@@ -53,10 +53,10 @@ public:
 
   Eigen::Matrix4d T_link_offset;
   Eigen::Matrix4d T_box_offset;
-  Eigen::Matrix4d T_link1;
-  Eigen::Matrix4d T_link2;
-  Eigen::Matrix4d T_link3;
-  Eigen::Matrix4d T_box;
+  mutable Eigen::Matrix4d T_link1;
+  mutable Eigen::Matrix4d T_link2;
+  mutable Eigen::Matrix4d T_link3;
+  mutable Eigen::Matrix4d T_box;
 
   CustomStateValidityChecker(const ob::SpaceInformationPtr& si) : ob::StateValidityChecker(si)
   {
