@@ -1,10 +1,42 @@
 #ifndef PLANNER_HPP
 #define PLANNER_HPP
 
+#include <ompl/base/Goal.h>
 #include <ompl/geometric/planners/rrt/RRTConnect.h>
 
 #include <iostream>
 #include "state_checker.hpp"
+
+class CustomGoal : public ompl::base::Goal
+{
+public:
+  CustomGoal(const ompl::base::SpaceInformationPtr& si) : ompl::base::Goal(si)
+  {
+  }
+
+  virtual bool isSatisfied(const ompl::base::State* state) const override
+  {
+    // cast the state to the RealVectorStateSpace
+    const auto* realState = state->as<ob::RealVectorStateSpace::StateType>();
+
+    // access the elements
+    double q1 = realState->values[0];
+    double q2 = realState->values[1];
+    double q3 = realState->values[2];
+
+    sum = std::pow(q1 - 0.0, 2) + std::pow(q2 + pi / 2, 2) + std::pow(q3 - 0.0, 2);
+    error = std::sqrt(sum);
+
+    if (error < 0.1)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+};
 
 void plan()
 {
@@ -37,16 +69,20 @@ void plan()
   start[2] = -0.826;
 
   // create a random goal state
-  ob::ScopedState<> goal(space);
-  goal[0] = 0.0;
-  goal[1] = -pi / 2;
-  goal[2] = 0.0;
+  // ob::ScopedState<> goal(space);
+  // goal[0] = 0.0;
+  // goal[1] = -pi / 2;
+  // goal[2] = 0.0;
+
+  auto myCustomGoal = std::make_shared<CustomGoal>(si);
 
   // create a problem instance
   auto pdef(std::make_shared<ob::ProblemDefinition>(si));
 
   // set the start and goal states
   pdef->setStartAndGoalStates(start, goal);
+  pdef->addStartState(start);
+  pdef->setGoal(myCustomGoal);
 
   // create a planner for the defined space
   auto planner(std::make_shared<og::RRTConnect>(si));
