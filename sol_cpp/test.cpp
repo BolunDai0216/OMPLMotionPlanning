@@ -179,12 +179,28 @@ public:
     bool col14 = hpp::fcl::collide(&box1_col, T_box1_fcl, &box_col, T_box_fcl, req, res);
     res.clear();
 
-    std::cout << "col11: " << col11 << std::endl;
-    std::cout << "col12: " << col12 << std::endl;
-    std::cout << "col13: " << col13 << std::endl;
-    std::cout << "col14: " << col14 << std::endl;
+    bool col21 = hpp::fcl::collide(&box2_col, T_box2_fcl, &link1_col, T_link1_fcl, req, res);
+    res.clear();
+    bool col22 = hpp::fcl::collide(&box2_col, T_box2_fcl, &link2_col, T_link2_fcl, req, res);
+    res.clear();
+    bool col23 = hpp::fcl::collide(&box2_col, T_box2_fcl, &link3_col, T_link3_fcl, req, res);
+    res.clear();
+    bool col24 = hpp::fcl::collide(&box2_col, T_box2_fcl, &box_col, T_box_fcl, req, res);
+    res.clear();
 
-    return col14;
+    bool col31 = hpp::fcl::collide(&box3_col, T_box3_fcl, &link1_col, T_link1_fcl, req, res);
+    res.clear();
+    bool col32 = hpp::fcl::collide(&box3_col, T_box3_fcl, &link2_col, T_link2_fcl, req, res);
+    res.clear();
+    bool col33 = hpp::fcl::collide(&box3_col, T_box3_fcl, &link3_col, T_link3_fcl, req, res);
+    res.clear();
+    bool col34 = hpp::fcl::collide(&box3_col, T_box3_fcl, &box_col, T_box_fcl, req, res);
+    res.clear();
+
+    bool in_collision =
+        !col11 * !col12 * !col13 * !col14 * !col21 * !col22 * !col23 * !col24 * !col31 * !col32 * !col33 * !col34;
+
+    return in_collision;
   }
 };
 
