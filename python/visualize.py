@@ -1,5 +1,6 @@
 import pickle
 import time
+import pybullet
 
 import numpy as np
 from env import Env
@@ -15,18 +16,17 @@ def main():
 
     path = [
         [0.611, 0.215, -0.826],
-        # [0.745192, 0.177998, -1.05012],
-        # [1.18381, 0.0342716, -1.53557],
-        # [1.44107, 0.22211, -1.52881],
-        # [0, 1.5708, 0],
-        [1.33273, -0.377485, -1.27624],
-        [1.81352, -0.927551, -1.56821],
-        [1.25089, -1.06738, -1.54149],
-        [0.384449, -0.755626, -1.16574],
+        [1.35408, -0.384872, -1.32297],
+        [1.96655, -0.0837118, -1.18028],
+        [2.59736, 0.331914, -0.954574],
+        [3.00716, 0.553205, -0.765477],
     ]
 
     env = Env()
     env.reset()
+    target = pybullet.loadURDF("robots/target.urdf", useFixedBase=True)
+    pybullet.resetBasePositionAndOrientation(target, [-1.5, 0.0, 0.05], [0, 0, 0, 1])
+
     n = len(path)
     distance_threshold = 0.01
 
