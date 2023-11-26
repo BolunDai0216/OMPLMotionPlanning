@@ -17,5 +17,13 @@ RUN apt-get install -qqy \
     cmake \
     lsb-release
 
+RUN mkdir -p /etc/apt/keyrings
+RUN curl http://robotpkg.openrobots.org/packages/debian/robotpkg.asc | tee /etc/apt/keyrings/robotpkg.asc
+RUN echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/robotpkg.asc] http://robotpkg.openrobots.org/packages/debian/pub $(lsb_release -cs) robotpkg" | \
+    tee /etc/apt/sources.list.d/robotpkg.list
+
+RUN apt-get update && apt-get install -qqy \
+    robotpkg-py38-pinocchio
+
 # Specify the command to run on container start
 CMD ["bash"]
