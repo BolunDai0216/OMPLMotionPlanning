@@ -7,7 +7,7 @@ set(CMAKE_INSTALL_PREFIX $ENV{CONDA_PREFIX})
 find_package(ompl REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(pinocchio REQUIRED)
-# find_package(hpp-fcl REQUIRED)
+find_package(hpp-fcl REQUIRED)
 
 # Add executable target with source files
 add_executable(ompl_hello_world test.cpp)
