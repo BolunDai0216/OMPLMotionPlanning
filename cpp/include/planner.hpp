@@ -75,12 +75,6 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
   {
     // get the goal representation from the problem definition (not the same as the goal state)
     // and inquire about the found path
-    // ob::PathPtr path = pdef->getSolutionPath();
-    // std::cout << "Found solution:" << std::endl;
-
-    // // print the path to screen
-    // path->print(std::cout);
-
     auto path = pdef->getSolutionPath()->as<og::PathGeometric>();
     std::cout << "Found solution:" << std::endl;
 
@@ -88,7 +82,7 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
     for (const auto &state : path->getStates())
     {
         space->copyToReals(reals, state);
-        std::cout << "state: " << reals[0] << " " << reals[1] << " " << reals[2] << std::endl;
+        std::cout << "[" << reals[0] << ", " << reals[1] << ", " << reals[2] << "]" << std::endl;
     }
   }
   else
@@ -161,11 +155,15 @@ void planConnect(const std::array<double, 3>& q_start, const std::array<double, 
   {
     // get the goal representation from the problem definition (not the same as the goal state)
     // and inquire about the found path
-    ob::PathPtr path = pdef->getSolutionPath();
+    auto path = pdef->getSolutionPath()->as<og::PathGeometric>();
     std::cout << "Found solution:" << std::endl;
 
-    // print the path to screen
-    path->print(std::cout);
+    std::vector<double> reals;
+    for (const auto &state : path->getStates())
+    {
+        space->copyToReals(reals, state);
+        std::cout << "[" << reals[0] << ", " << reals[1] << ", " << reals[2] << "]" << std::endl;
+    }
   }
   else
     std::cout << "No solution found" << std::endl;
