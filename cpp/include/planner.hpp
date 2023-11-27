@@ -84,7 +84,7 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
         space->copyToReals(reals, state);
 
         // Or copy out however you want
-        const auto &vector = Eigen::Map<Eigen::VectorXd>(reals.data(), dimension);
+        const auto &vector = Eigen::Map<Eigen::VectorXd>(reals.data(), 3);
     }
   }
   else
