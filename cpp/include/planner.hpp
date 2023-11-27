@@ -81,16 +81,14 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
     // // print the path to screen
     // path->print(std::cout);
 
-    auto path = pdef->getSolutionPath()->as<ompl::base::geometric::PathGeometric>();
+    auto path = pdef->getSolutionPath()->as<og::PathGeometric>();
     std::cout << "Found solution:" << std::endl;
 
     std::vector<double> reals;
     for (const auto &state : path->getStates())
     {
         space->copyToReals(reals, state);
-
-        // Or copy out however you want
-        const auto &vector = Eigen::Map<Eigen::VectorXd>(reals.data(), 3);
+        std::cout << "state: " << reals[0] << " " << reals[1] << " " << reals[2] << std::endl;
     }
   }
   else
