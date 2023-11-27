@@ -75,23 +75,23 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
   {
     // get the goal representation from the problem definition (not the same as the goal state)
     // and inquire about the found path
-    ob::PathPtr path = pdef->getSolutionPath();
-    std::cout << "Found solution:" << std::endl;
-
-    // print the path to screen
-    path->print(std::cout);
-
-    // auto path = pdef->getSolutionPath();
+    // ob::PathPtr path = pdef->getSolutionPath();
     // std::cout << "Found solution:" << std::endl;
 
-    // std::vector<double> reals;
-    // for (const auto &state : path.getStates())
-    // {
-    //     space->copyToReals(reals, state);
+    // // print the path to screen
+    // path->print(std::cout);
 
-    //     // Or copy out however you want
-    //     const auto &vector = Eigen::Map<Eigen::VectorXd>(reals.data(), 3);
-    // }
+    auto path = pdef->getSolutionPath()->as<ompl::base::geometric::PathGeometric>();
+    std::cout << "Found solution:" << std::endl;
+
+    std::vector<double> reals;
+    for (const auto &state : path->getStates())
+    {
+        space->copyToReals(reals, state);
+
+        // Or copy out however you want
+        const auto &vector = Eigen::Map<Eigen::VectorXd>(reals.data(), 3);
+    }
   }
   else
     std::cout << "No solution found" << std::endl;
