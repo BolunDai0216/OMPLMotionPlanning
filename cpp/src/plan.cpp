@@ -4,24 +4,6 @@
 
 #include "planner.hpp"
 
-void saveToCSV(const Eigen::MatrixXd& matrix, const std::string& filename) {
-    std::ofstream file(filename);
-
-    if (file.is_open()) {
-        for (int i = 0; i < matrix.rows(); ++i) {
-            for (int j = 0; j < matrix.cols(); ++j) {
-                file << matrix(i, j);
-                if (j != matrix.cols() - 1) 
-                    file << ","; // Comma for next column
-            }
-            file << "\n"; // Newline for next row
-        }
-        file.close();
-    } else {
-        std::cerr << "Could not open file: " << filename << std::endl;
-    }
-}
-
 int main(int /*argc*/, char** /*argv*/)
 {
   std::cout << "OMPL version: " << OMPL_VERSION << std::endl;
@@ -105,7 +87,14 @@ int main(int /*argc*/, char** /*argv*/)
   auto plan_path = planConnect(q_plan_start, q_goal, box_pose, plan_threshold);
 
   // save to csv
-  saveToCSV(plan_path, "/home/AnywareInterview/data/plan.csv");
+  const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, ", ", "\n");
+ 
+  std::ofstream file("/home/AnywareInterview/data/plan.csv");
+  if (file.is_open())
+  {
+      file << plan_path.format(CSVFormat);
+      file.close();
+  }
 
   return 0;
 }
