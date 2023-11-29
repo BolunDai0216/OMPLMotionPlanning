@@ -50,7 +50,7 @@ int main(int /*argc*/, char** /*argv*/)
 
   double threshold = 0.1;
 
-  plan(q_start, goal, box_pose, threshold);
+  auto path = plan(q_start, goal, box_pose, threshold);
 
   return 0;
 }

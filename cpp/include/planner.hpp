@@ -9,8 +9,8 @@
 #include "state_checker.hpp"
 #include "goal_checker.hpp"
 
-void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goal,
-          const std::array<double, 9>& box_pose, const double threshold)
+Eigen::MatrixXd plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goal,
+                     const std::array<double, 9>& box_pose, const double threshold)
 {
   // construct the state space we are planning in
   auto space(std::make_shared<ob::RealVectorStateSpace>(3));
@@ -78,19 +78,35 @@ void plan(const std::array<double, 3>& q_start, const std::array<double, 3>& goa
     auto path = pdef->getSolutionPath()->as<og::PathGeometric>();
     std::cout << "Found solution:" << std::endl;
 
+    int pathLength = path->getStateCount();
+    Eigen::MatrixXd pathMatrix(pathLength, 3);
+
     std::vector<double> reals;
-    for (const auto &state : path->getStates())
+    for (int i = 0; i < pathLength; ++i)
     {
+        const auto &state = path->getStates()[i];
         space->copyToReals(reals, state);
-        std::cout << "[" << reals[0] << ", " << reals[1] << ", " << reals[2] << "]" << std::endl;
+
+        // Fill the matrix with state values
+        for (int j = 0; j < 3; ++j)
+        {
+            pathMatrix(i, j) = reals[j];
+        }
     }
+
+    // print solution to console
+    std::cout << pathMatrix << std::endl;
+    return pathMatrix;
   }
-  else
+  else{
+    Eigen::MatrixXd pathMatrix(0, 0);
     std::cout << "No solution found" << std::endl;
+    return pathMatrix;
+  }
 }
 
-void planConnect(const std::array<double, 3>& q_start, const std::array<double, 3>& q_goal,
-                 const std::array<double, 9>& box_pose, const double threshold)
+Eigen::MatrixXd planConnect(const std::array<double, 3>& q_start, const std::array<double, 3>& q_goal,
+                            const std::array<double, 9>& box_pose, const double threshold)
 {
   // construct the state space we are planning in
   auto space(std::make_shared<ob::RealVectorStateSpace>(3));
@@ -158,13 +174,29 @@ void planConnect(const std::array<double, 3>& q_start, const std::array<double, 
     auto path = pdef->getSolutionPath()->as<og::PathGeometric>();
     std::cout << "Found solution:" << std::endl;
 
+    int pathLength = path->getStateCount();
+    Eigen::MatrixXd pathMatrix(pathLength, 3);
+
     std::vector<double> reals;
-    for (const auto &state : path->getStates())
+    for (int i = 0; i < pathLength; ++i)
     {
+        const auto &state = path->getStates()[i];
         space->copyToReals(reals, state);
-        std::cout << "[" << reals[0] << ", " << reals[1] << ", " << reals[2] << "]" << std::endl;
+
+        // Fill the matrix with state values
+        for (int j = 0; j < 3; ++j)
+        {
+            pathMatrix(i, j) = reals[j];
+        }
     }
+
+    // print solution to console
+    std::cout << pathMatrix << std::endl;
+    return pathMatrix;
   }
-  else
+  else{
+    Eigen::MatrixXd pathMatrix(0, 0);
     std::cout << "No solution found" << std::endl;
+    return pathMatrix;
+  }
 }
