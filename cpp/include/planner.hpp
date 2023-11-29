@@ -84,21 +84,22 @@ Eigen::MatrixXd plan(const std::array<double, 3>& q_start, const std::array<doub
     std::vector<double> reals;
     for (int i = 0; i < pathLength; ++i)
     {
-        const auto &state = path->getStates()[i];
-        space->copyToReals(reals, state);
+      const auto& state = path->getStates()[i];
+      space->copyToReals(reals, state);
 
-        // Fill the matrix with state values
-        for (int j = 0; j < 3; ++j)
-        {
-            pathMatrix(i, j) = reals[j];
-        }
+      // Fill the matrix with state values
+      for (int j = 0; j < 3; ++j)
+      {
+        pathMatrix(i, j) = reals[j];
+      }
     }
 
     // print solution to console
     std::cout << pathMatrix << std::endl;
     return pathMatrix;
   }
-  else{
+  else
+  {
     Eigen::MatrixXd pathMatrix(0, 0);
     std::cout << "No solution found" << std::endl;
     return pathMatrix;
@@ -180,21 +181,22 @@ Eigen::MatrixXd planConnect(const std::array<double, 3>& q_start, const std::arr
     std::vector<double> reals;
     for (int i = 0; i < pathLength; ++i)
     {
-        const auto &state = path->getStates()[i];
-        space->copyToReals(reals, state);
+      const auto& state = path->getStates()[i];
+      space->copyToReals(reals, state);
 
-        // Fill the matrix with state values
-        for (int j = 0; j < 3; ++j)
-        {
-            pathMatrix(i, j) = reals[j];
-        }
+      // Fill the matrix with state values
+      for (int j = 0; j < 3; ++j)
+      {
+        pathMatrix(i, j) = reals[j];
+      }
     }
 
     // print solution to console
     std::cout << pathMatrix << std::endl;
     return pathMatrix;
   }
-  else{
+  else
+  {
     Eigen::MatrixXd pathMatrix(0, 0);
     std::cout << "No solution found" << std::endl;
     return pathMatrix;

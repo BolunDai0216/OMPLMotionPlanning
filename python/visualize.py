@@ -23,13 +23,7 @@ def main():
         with open("../data/path.pkl", "rb") as f:
             path = pickle.load(f)
     else:
-        path = [
-            [0.611, 0.215, -0.826],
-            [1.35408, -0.384872, -1.32297],
-            [1.96655, -0.0837118, -1.18028],
-            [2.59736, 0.331914, -0.954574],
-            [3.00716, 0.553205, -0.765477],
-        ]
+        path = np.genfromtxt("../data/plan.csv", delimiter=",")
 
         target = pybullet.loadURDF("robots/target.urdf", useFixedBase=True)
         pybullet.resetBasePositionAndOrientation(

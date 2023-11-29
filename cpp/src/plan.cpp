@@ -64,7 +64,7 @@ int main(int /*argc*/, char** /*argv*/)
   auto path = plan(q_start, goal, box_pose, threshold);
 
   int n_states = path.rows();
-  std::array<double, 3> q_goal = { path(n_states-1, 0), path(n_states-1, 1), path(n_states-1, 2) };
+  std::array<double, 3> q_goal = { path(n_states - 1, 0), path(n_states - 1, 1), path(n_states - 1, 2) };
 
   try
   {
@@ -88,12 +88,12 @@ int main(int /*argc*/, char** /*argv*/)
 
   // save to csv
   const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, ", ", "\n");
- 
+
   std::ofstream file("/home/AnywareInterview/data/plan.csv");
   if (file.is_open())
   {
-      file << plan_path.format(CSVFormat);
-      file.close();
+    file << plan_path.format(CSVFormat);
+    file.close();
   }
 
   return 0;
