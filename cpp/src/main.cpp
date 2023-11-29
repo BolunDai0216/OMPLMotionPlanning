@@ -52,5 +52,15 @@ int main(int /*argc*/, char** /*argv*/)
 
   auto path = plan(q_start, goal, box_pose, threshold);
 
+  // save to csv
+  const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, ", ", "\n");
+
+  std::ofstream file("/home/AnywareInterview/data/interview.csv");
+  if (file.is_open())
+  {
+    file << path.format(CSVFormat);
+    file.close();
+  }
+
   return 0;
 }
