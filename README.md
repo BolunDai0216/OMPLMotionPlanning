@@ -1,4 +1,4 @@
-# AnywareInterview
+# OMPL Motion Planning
 
 I used an OMPL RRT* solver to solve this task. The collision checking is done using `hpp-fcl` and the forward kinematics is computed using `pinocchio`. The code is written in C++ and the visualization is done using `pybullet` in python. I made one assumption -- the starting joint configuration is given. We can relax this assumption by using the same motion planner but finding a collision-free path from a known collision-free configuration to the starting pose and use the solved joint angles as the starting joint angles.
 
